@@ -31,6 +31,7 @@ end
 
 %w{
   wget
+  openssl-devel
   sysstat
   bind-utils
   telnet

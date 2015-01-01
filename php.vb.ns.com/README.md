@@ -1,5 +1,5 @@
-******* vagrant README
-======================
+PHP vagrant README
+==================
 
 Requirements
 ------------

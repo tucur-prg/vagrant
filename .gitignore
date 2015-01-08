@@ -1,0 +1,19 @@
+# .vagrant
+.vagrant/
+
+# Eclipse 設定ファイル
+.settings/
+*.prefs
+
+# Eclipse Projectファイル
+.project
+
+# Eclipse Project includePath設定ファイル
+.buildpath
+
+# その他
+.DS_Store*
+*.bak
+*.log
+Thumbs.db
+desktop.ini

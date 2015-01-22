@@ -1,0 +1,11 @@
+
+-- Databases
+
+CREATE DATABASE IF NOT EXISTS `zabbix` CHARACTER SET utf8;
+
+-- Grants
+
+GRANT ALL PRIVILEGES ON zabbix.* TO `zabbix`@'localhost' IDENTIFIED BY '<%= @password %>';
+
+FLUSH PRIVILEGES;
+

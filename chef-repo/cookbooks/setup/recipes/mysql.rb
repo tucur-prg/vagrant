@@ -18,6 +18,7 @@ end
   mysql-utilities
 }.each do |pkg|
     yum_package "#{pkg}" do
+        options '--enablerepo=mysql-tools-community'
     end
 end
 

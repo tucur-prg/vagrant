@@ -11,32 +11,6 @@ rpm_package "remi-release" do
     source "#{Chef::Config[:file_cache_path]}/remi-release-6.rpm"
 end
 
-# phpenv + php-build
-%w{
-  libxml2
-  libxml2-devel
-  curl-devel
-  libjpeg-devel
-  libpng-devel
-  libmcrypt-devel
-  mysql-devel
-  readline-devel
-  libtidy-devel
-  libxslt-devel
-}.each do |pkg|
-    yum_package "#{pkg}" do
-    end
-end
-
-bash "phpenv php-build" do
-    code <<-EOS
-        curl https://raw.githubusercontent.com/CHH/phpenv/master/bin/phpenv-install.sh | bash
-        git clone git://github.com/CHH/php-build.git ~/.phpenv/plugins/php-build
-        echo 'export PATH="$HOME/.phpenv/bin:$PATH"' >> ~/.bashrc
-        echo 'eval "$(phpenv init -)"' >> ~/.bashrc
-    EOS
-end
-
 # PHP Version 5.5.x
 yum_package "php" do
     options '--enablerepo=remi,remi-php55'

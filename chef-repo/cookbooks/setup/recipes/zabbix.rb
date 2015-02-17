@@ -58,6 +58,16 @@ template "/usr/share/doc/zabbix-server-mysql-2.4.3/create/setup.sql" do
     notifies :run, "execute[zabbix-setup]", :immediately
 end
 
+## PHP Settings
+
+template "/etc/php.d/php-settings.ini" do
+    source "php.php-settings.ini.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    action :nothing
+end
+
 ## MySQL Setup
 
 execute "zabbix-setup" do

@@ -1,0 +1,13 @@
+
+<VirtualHost *:80>
+    ServerName <%= @hostname %>
+
+    DocumentRoot <%= @document_root %>
+
+    ErrorLog  logs/error_log
+    CustomLog logs/access_log combined
+
+    <Directory <%= @document_root %>>
+        AllowOverride All
+    </Directory>
+</VirtualHost>

@@ -1,5 +1,5 @@
 #
-# ハッシュ
+# 連想配列（ハッシュ）
 #
 
 puts "---- hash ----"
@@ -19,4 +19,3 @@ p h.size           # 要素数
 p h.keys           # キーの一覧
 p h.values         # 値の一覧
 p h.has_key?(:foo) # キーの存在確認
-

@@ -16,10 +16,12 @@
 *.msi
 *.app
 *.dmg
+*.syso
 
 # その他
 .DS_Store*
 *.bak
 *.log
+*.out
 Thumbs.db
 desktop.ini

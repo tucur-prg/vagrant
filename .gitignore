@@ -11,6 +11,12 @@
 # Eclipse Project includePath設定ファイル
 .buildpath
 
+# binary
+*.exe
+*.msi
+*.app
+*.dmg
+
 # その他
 .DS_Store*
 *.bak

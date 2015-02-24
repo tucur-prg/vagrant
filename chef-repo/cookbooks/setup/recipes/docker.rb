@@ -1,5 +1,13 @@
 
 %w{
+  device-mapper-event-libs
+}.each do |pkg|
+    yum_package "#{pkg}" do
+        action :upgrade
+    end
+end
+
+%w{
   docker-io
 }.each do |pkg|
     yum_package "#{pkg}" do

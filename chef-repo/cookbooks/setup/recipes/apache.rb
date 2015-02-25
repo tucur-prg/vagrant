@@ -1,7 +1,6 @@
 
 yum_package "httpd" do
     notifies :install, "yum_package[mod_ssl]", :immediately
-    notifies :create, "template[/etc/httpd/conf/httpd.conf]", :immediately
 end
 
 yum_package "mod_ssl" do
@@ -10,7 +9,6 @@ yum_package "mod_ssl" do
 end
 
 template "/etc/httpd/conf/httpd.conf" do
-    action :nothing
     source "apache.httpd.conf.erb"
     owner "root"
     group "root"
@@ -32,4 +30,3 @@ end
         action [ :enable, :start ]
     end
 end
-

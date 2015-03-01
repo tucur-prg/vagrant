@@ -15,6 +15,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "setup"
     chef.add_recipe "setup::mysql"
     chef.add_recipe "setup::mysql-fabric"
+    chef.add_recipe "setup::docker"
+#    chef.add_recipe "docker::mysql-replication"
 
     chef.json = {
         :setup => {

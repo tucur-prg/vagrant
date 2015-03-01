@@ -1,2 +1,5 @@
+Ubuntu Setup Recieps
+--------------------
 
-Local Settings Vagrantfile
+Application Install
+Example Scripts

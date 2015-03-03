@@ -1,7 +1,7 @@
 
-template "/etc/yum.repos.d/mongodb.repo" do
-    action :create
-    source "yum.repos.mongodb.repo.erb"
+cookbook_file "/etc/yum.repos.d/mongodb.repo" do
+    action :create_if_missing
+    source "yum.repo.mongodb.repo"
     owner "root"
     group "root"
     mode 0644

@@ -14,6 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.add_recipe "setup"
     chef.add_recipe "setup::node"
+    chef.add_recipe "setup::mongo"
 
     chef.json = {
         :setup => {

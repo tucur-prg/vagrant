@@ -1,22 +1,23 @@
 # .vagrant
 .vagrant/
 
-# Eclipse 設定ファイル
+# Eclipse
 .settings/
 *.prefs
-
-# Eclipse Projectファイル
 .project
-
-# Eclipse Project includePath設定ファイル
 .buildpath
 
-# binary
+# Node
+node_modules/
+
+# Golang
+*.syso
+
+# binary file
 *.exe
 *.msi
 *.app
 *.dmg
-*.syso
 
 # その他
 .DS_Store*

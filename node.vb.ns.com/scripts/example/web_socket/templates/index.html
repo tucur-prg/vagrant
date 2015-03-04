@@ -1,0 +1,56 @@
+<!DOCTYPE htm>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Socket</title>
+</head>
+
+<body>
+    <section>
+        <form id="jq-websocket">
+            <select id="jq-rooms">
+                <option value="room-1">Room 1</option>
+                <option value="room-2">Room 2</option>
+            </select>
+            <input type="text" id="jq-msg">
+            <input type="submit" value="Send">
+        </form>
+        <ul id="jq-logs"></ul>
+        <div id="jq-news"></div>
+    </section>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+$(function () {
+    // emit: イベント発信
+    // on: イベント待ち受け
+    //var socket = io.connect();
+    var chat = io.connect('http://172.16.10.13:1337/chat'),
+        news = io.connect('http://172.16.10.13:1337/news');
+
+    $('#jq-websocket').submit(function (ev) {
+        ev.preventDefault();
+
+//        socket.emit('emit_from_client', $('#jq-msg').val());
+        // JSON形式
+
+        chat.json.emit('emit_from_client', {
+            room: $('#jq-rooms').val(),
+            msg: $('#jq-msg').val(),
+        });
+
+        $('#jq-msg').val('').focus();
+    });
+
+    chat.on('emit_from_server', function (data) {
+        $('#jq-logs').append($('<li>').text(data));
+    });
+
+    news.on('emit_from_server', function (data) {
+        $('#jq-news').text(data);
+    });
+});
+</script>
+</body>
+</html>

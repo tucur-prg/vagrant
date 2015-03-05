@@ -5,21 +5,43 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "chef/centos-6.5"
-  config.vm.network :private_network, ip: '172.16.50.11', netmask: '255.255.0.0'
+    config.vm.define :server do |node|
+        node.vm.box = "chef/centos-6.5"
+        node.vm.network :private_network, ip: '10.10.50.11', netmask: '255.0.0.0'
 
-  config.omnibus.chef_version = :latest
-  config.vm.provision "chef_solo" do |chef|
-    chef.cookbooks_path = "../chef-repo/cookbooks"
+        node.omnibus.chef_version = :latest
+        node.vm.provision "chef_solo" do |chef|
+           chef.cookbooks_path = "../chef-repo/cookbooks"
 
-    chef.add_recipe "setup"
-    chef.add_recipe "setup::zabbix"
+           chef.add_recipe "setup"
+           chef.add_recipe "setup::zabbix"
 
-    chef.json = {
-        :setup => {
-            :namespace => "zabbix.vb.ns.com",
-            :os_name   => "CentOS 6.5 x86",
-        }
-    }
-  end
+           chef.json = {
+               :setup => {
+                   :namespace => "zabbix.vb.ns.com",
+                   :os_name   => "CentOS 6.5 x86",
+               }
+           }
+       end
+    end
+
+    config.vm.define :agent do |node|
+        node.vm.box = "chef/centos-6.5"
+        node.vm.network :private_network, ip: '10.10.51.11', netmask: '255.0.0.0'
+
+        node.omnibus.chef_version = :latest
+        node.vm.provision "chef_solo" do |chef|
+           chef.cookbooks_path = "../chef-repo/cookbooks"
+
+           chef.add_recipe "setup"
+           chef.add_recipe "setup::zabbix-agent"
+
+           chef.json = {
+               :setup => {
+                   :namespace => "zabbix-agent.vb.ns.com",
+                   :os_name   => "CentOS 6.5 x86",
+               }
+           }
+       end
+    end
 end

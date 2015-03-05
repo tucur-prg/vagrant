@@ -43,9 +43,9 @@ template "/etc/zabbix/zabbix_server.conf" do
     })
 end
 
-template "/usr/share/doc/zabbix-server-mysql-2.4.3/create/setup.sql" do
+template "/usr/share/doc/zabbix-server-mysql-2.4.4/create/setup.sql" do
     action :create
-    not_if { File.exists?("/usr/share/doc/zabbix-server-mysql-2.4.3/create/setup.sql") }
+    not_if { File.exists?("/usr/share/doc/zabbix-server-mysql-2.4.4/create/setup.sql") }
     source "zabbix.setup.sql.erb"
     owner "root"
     group "root"
@@ -65,14 +65,22 @@ template "/etc/php.d/php-settings.ini" do
     owner "root"
     group "root"
     mode 0644
-    action :nothing
+end
+
+## Apache Settings
+
+template "/etc/httpd/conf/httpd.conf" do
+    source "apache.httpd.conf.erb"
+    owner "root"
+    group "root"
+    mode 0644
 end
 
 ## MySQL Setup
 
 execute "zabbix-setup" do
     action :nothing
-    command "/usr/bin/mysql -u root < /usr/share/doc/zabbix-server-mysql-2.4.3/create/setup.sql"
+    command "/usr/bin/mysql -u root < /usr/share/doc/zabbix-server-mysql-2.4.4/create/setup.sql"
 
     notifies :run, "execute[zabbix-create-schema]", :immediately
     notifies :run, "execute[zabbix-insert-images]", :immediately
@@ -81,17 +89,17 @@ end
 
 execute "zabbix-create-schema" do
     action :nothing
-    command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.3/create/schema.sql"
+    command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.4/create/schema.sql"
 end
 
 execute "zabbix-insert-images" do
     action :nothing
-    command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.3/create/images.sql"
+    command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.4/create/images.sql"
 end
 
 execute "zabbix-insert-data" do
     action :nothing
-    command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.3/create/data.sql"
+    command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.4/create/data.sql"
 end
 
 ## Service
@@ -104,4 +112,3 @@ end
         action [ :enable, :start ]
     end
 end
-

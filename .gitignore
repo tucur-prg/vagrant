@@ -10,6 +10,9 @@
 # Node
 node_modules/
 
+# Erlang
+*.beam
+
 # Golang
 *.syso
 

@@ -1,7 +1,4 @@
 
-%w{
-  erlang
-}.each do |pkg|
-    yum_package "#{pkg}" do
-    end
+yum_package "erlang" do
+    options '--enablerepo=epel'
 end

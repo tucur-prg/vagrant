@@ -1,0 +1,10 @@
+DEVICE="eth0"
+BOOTPROTO="dhcp"
+
+IPV6INIT="yes"
+NM_CONTROLLED="yes"
+ONBOOT="yes"
+TYPE="Ethernet"
+
+DNS1=8.8.8.8
+DNS2=8.8.4.4

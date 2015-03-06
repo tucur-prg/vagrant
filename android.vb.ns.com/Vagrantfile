@@ -5,20 +5,20 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "chef/ubuntu-14.04"
-  config.vm.network :private_network, ip: '172.16.40.11', netmask: '255.255.0.0'
+    config.vm.box = "chef/ubuntu-14.04"
+    config.vm.network :private_network, ip: '10.10.40.11', netmask: '255.0.0.0'
 
-  config.omnibus.chef_version = :latest
-  config.vm.provision "chef_solo" do |chef|
-    chef.cookbooks_path = "../chef-repo/cookbooks"
+    config.omnibus.chef_version = :latest
+    config.vm.provision "chef_solo" do |chef|
+        chef.cookbooks_path = "../chef-repo/cookbooks"
 
-    chef.add_recipe "ubuntu_setup"
+        chef.add_recipe "ubuntu_setup"
 
-    chef.json = {
-        :setup => {
-            :namespace => "android.vb.ns.com",
-            :os_name   => "Ubuntu 14.04 x86",
+        chef.json = {
+            :setup => {
+                :namespace => "android.vb.ns.com",
+                :os_name   => "Ubuntu 14.04 x86",
+            }
         }
-    }
-  end
+    end
 end

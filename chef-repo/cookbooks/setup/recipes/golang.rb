@@ -1,9 +1,9 @@
 
 %w{
-  golang
-  mercurial
-  glibc-devel.i686
-  libgcc.i686
+    golang
+    mercurial
+    glibc-devel.i686
+    libgcc.i686
 }.each do |pkg|
     yum_package "#{pkg}" do
     end

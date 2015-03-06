@@ -3,7 +3,7 @@ yum_package "redis" do
 end
 
 %w{
-  redis
+    redis
 }.each do |pkg|
     service "#{pkg}" do
         action [ :enable, :start ]

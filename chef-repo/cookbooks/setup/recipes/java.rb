@@ -13,8 +13,8 @@ rpm_package "jpackage-release" do
 end
 
 %w{
-  java-1.7.0-openjdk
-  java-1.7.0-openjdk-devel
+    java-1.7.0-openjdk
+    java-1.7.0-openjdk-devel
 }.each do |pkg|
     yum_package "#{pkg}" do
         options "--nogpgcheck"

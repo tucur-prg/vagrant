@@ -17,16 +17,16 @@ end
 ### Software Install #############################
 
 %w{
-  wget
-  openssl-devel
-  sysstat
-  bind-utils
-  telnet
-  gcc
-  gcc-c++
-  yum-priorities
-  git
-  unzip
+    wget
+    openssl-devel
+    sysstat
+    bind-utils
+    telnet
+    gcc
+    gcc-c++
+    yum-priorities
+    git
+    unzip
 }.each do |pkg|
     yum_package "#{pkg}" do
     end
@@ -50,15 +50,15 @@ end
 ### Service Setup ################################
 
 %w{
-  auditd
-  blk-availability
-  iptables
-  ip6tables
-  lvm2-monitor
-  mdmonitor
-  netfs
-  postfix
-  udev-post
+    auditd
+    blk-availability
+    iptables
+    ip6tables
+    lvm2-monitor
+    mdmonitor
+    netfs
+    postfix
+    udev-post
 }.each do |pkg|
     service "#{pkg}" do
         action [ :disable, :stop ]
@@ -79,4 +79,3 @@ template "/etc/bashrc" do
       :os_name   => node.setup.os_name,
     })
 end
-

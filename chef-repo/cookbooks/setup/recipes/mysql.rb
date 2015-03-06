@@ -12,10 +12,10 @@ rpm_package "mysql-community-release" do
 end
 
 %w{
-  mysql
-  mysql-devel
-  mysql-server
-  mysql-utilities
+    mysql
+    mysql-devel
+    mysql-server
+    mysql-utilities
 }.each do |pkg|
     yum_package "#{pkg}" do
         options '--enablerepo=mysql-tools-community'
@@ -23,7 +23,7 @@ end
 end
 
 %w{
-  mysqld
+    mysqld
 }.each do |pkg|
     service "#{pkg}" do
         action [ :enable, :start ]

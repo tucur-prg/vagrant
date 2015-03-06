@@ -1,16 +1,16 @@
 
 # phpenv + php-build
 %w{
-  libxml2
-  libxml2-devel
-  curl-devel
-  libjpeg-devel
-  libpng-devel
-  libmcrypt-devel
-  mysql-devel
-  readline-devel
-  libtidy-devel
-  libxslt-devel
+    libxml2
+    libxml2-devel
+    curl-devel
+    libjpeg-devel
+    libpng-devel
+    libmcrypt-devel
+    mysql-devel
+    readline-devel
+    libtidy-devel
+    libxslt-devel
 }.each do |pkg|
     yum_package "#{pkg}" do
     end

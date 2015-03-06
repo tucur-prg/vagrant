@@ -20,11 +20,11 @@ rpm_package "zabbix-release" do
 end
 
 %w{
-  zabbix-server-mysql
-  zabbix-web-mysql
-  zabbix-web-japanese
-  zabbix-agent
-  zabbix-get
+    zabbix-server-mysql
+    zabbix-web-mysql
+    zabbix-web-japanese
+    zabbix-agent
+    zabbix-get
 }.each do |pkg|
     yum_package "#{pkg}" do
       options '--enablerepo=zabbix'
@@ -105,8 +105,8 @@ end
 ## Service
 
 %w{
-  zabbix-server
-  httpd
+    zabbix-server
+    httpd
 }.each do |pkg|
     service "#{pkg}" do
         action [ :enable, :start ]

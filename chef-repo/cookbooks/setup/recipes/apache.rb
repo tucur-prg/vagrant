@@ -24,7 +24,7 @@ template "/etc/httpd/conf.d/ssl.conf" do
 end
 
 %w{
-  httpd
+    httpd
 }.each do |pkg|
     service "#{pkg}" do
         action [ :enable, :start ]

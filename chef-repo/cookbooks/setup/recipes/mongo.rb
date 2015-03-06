@@ -8,14 +8,14 @@ cookbook_file "/etc/yum.repos.d/mongodb.repo" do
 end
 
 %w{
-  mongodb-org
+    mongodb-org
 }.each do |pkg|
     yum_package "#{pkg}" do
     end
 end
 
 %w{
-  mongod
+    mongod
 }.each do |pkg|
     service "#{pkg}" do
         action [ :enable, :start ]

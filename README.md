@@ -26,25 +26,25 @@ sudo権限あり
 IP Address
 ----------
 
-172.16.8.10 develop.vb.ns.com  
+10.10.8.10 develop.vb.ns.com  
 
-172.16.10.11 scala.vb.ns.com  
-172.16.10.12 hhvm.vb.ns.com  
-172.16.10.13 node.vb.ns.com  
-172.16.10.14 python.vb.ns.com  
-172.16.10.15 java.vb.ns.com  
-172.16.10.16 ruby.vb.ns.com  
-172.16.10.17 erlang.vb.ns.com  
-172.16.10.18 golang.vb.ns.com  
-172.16.10.19 php.vb.ns.com  
+10.10.10.11 scala.vb.ns.com  
+10.10.10.12 hhvm.vb.ns.com  
+10.10.10.13 node.vb.ns.com  
+10.10.10.14 python.vb.ns.com  
+10.10.10.15 java.vb.ns.com  
+10.10.10.16 ruby.vb.ns.com  
+10.10.10.17 erlang.vb.ns.com  
+10.10.10.18 golang.vb.ns.com  
+10.10.10.19 php.vb.ns.com  
 
-172.16.20.11 mongo.vb.ns.com  
-172.16.20.12 mysql.vb.ns.com  
+10.10.20.11 mongo.vb.ns.com  
+10.10.20.12 mysql.vb.ns.com  
 
-172.16.30.11 docker.vb.ns.com  
-172.16.30.12 rpm.vb.ns.com  
-172.16.30.13 ansible.vb.ns.com  
+10.10.30.11 docker.vb.ns.com  
+10.10.30.12 rpm.vb.ns.com  
+10.10.30.13 ansible.vb.ns.com  
 
-172.16.40.11 android.vb.ns.com  
+10.10.40.11 android.vb.ns.com  
 
-172.16.50.11 zabbix.vb.ns.com  
+10.10.50.11 zabbix.vb.ns.com  

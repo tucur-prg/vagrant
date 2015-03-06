@@ -18,13 +18,13 @@ yum_package "php" do
 end
 
 %w{
-  php-devel
-  php-mbstring
-  php-pdo
-  php-mysql
-  php-xml
-  php-pecl-xdebug
-  php-phpunit-DbUnit
+    php-devel
+    php-mbstring
+    php-pdo
+    php-mysql
+    php-xml
+    php-pecl-xdebug
+    php-phpunit-DbUnit
 }.each do |pkg|
     yum_package "#{pkg}" do
         options '--enablerepo=remi,remi-php55'
@@ -50,4 +50,3 @@ remote_file '/usr/local/bin/psysh' do
   source 'http://psysh.org/psysh'
   mode 0755
 end
-

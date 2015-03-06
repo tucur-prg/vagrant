@@ -15,7 +15,7 @@ yum_package "nginx" do
 end
 
 %w{
-  nginx
+    nginx
 }.each do |pkg|
     service "#{pkg}" do
         action [ :enable, :start ]

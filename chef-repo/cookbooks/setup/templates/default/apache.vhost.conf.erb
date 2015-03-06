@@ -11,3 +11,20 @@
         AllowOverride All
     </Directory>
 </VirtualHost>
+
+<VirtualHost *:443>
+    ServerName <%= @hostname %>
+
+    DocumentRoot <%= @document_root %>
+
+    ErrorLog  logs/error_log
+    CustomLog logs/access_log combined
+
+    SSLEngine             on
+    SSLCertificateFile    /etc/pki/tls/certs/localhost.crt
+    SSLCertificateKeyFile /etc/pki/tls/private/localhost.key
+
+    <Directory <%= @document_root %>>
+        AllowOverride All
+    </Directory>
+</VirtualHost>

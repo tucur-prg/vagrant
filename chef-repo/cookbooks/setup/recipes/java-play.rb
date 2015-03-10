@@ -5,12 +5,18 @@ remote_file "#{Chef::Config[:file_cache_path]}/typesafe-activator-1.2.12.zip" do
 end
 
 bash "install activator" do
-    not_if "ls /usr/share/activator-1.2.12"
+    not_if "which activator"
     code <<-EOH
-      cd "#{Chef::Config[:file_cache_path]}"
-      unzip "#{Chef::Config[:file_cache_path]}/typesafe-activator-1.2.12.zip"
-      mv "activator-1.2.12" "/usr/share/activator-1.2.12"
-      chmod 755 /usr/share/activator-1.2.12/activator
-      ln -s "/usr/share/activator-1.2.12/activator" "/usr/bin/activator"
+        cd "/usr/share/"
+        unzip "#{Chef::Config[:file_cache_path]}/typesafe-activator-1.2.12.zip"
+        chmod 755 /usr/share/activator-1.2.12/activator
+        ln -s "/usr/share/activator-1.2.12/activator" "/usr/bin/activator"
     EOH
+end
+
+template "/etc/profile.d/play.sh" do
+    source "etc.profile.play.sh.erb"
+    owner "root"
+    group "root"
+    mode 0644
 end

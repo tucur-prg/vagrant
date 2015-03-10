@@ -8,6 +8,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "chef/centos-6.5"
     config.vm.network :private_network, ip: '10.10.10.15', netmask: '255.0.0.0'
 
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+    end
+
     config.omnibus.chef_version = :latest
     config.vm.provision "chef_solo" do |chef|
         chef.cookbooks_path = "../chef-repo/cookbooks"

@@ -5,21 +5,53 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-    config.vm.box = "chef/centos-6.5"
-    config.vm.network :private_network, ip: '10.10.20.12'
+  config.vm.define "master" do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.network :private_network, ip: '10.10.20.12'
+    node.vm.hostname = "master"
 
-    config.omnibus.chef_version = :latest
-    config.vm.provision "chef_solo" do |chef|
-        chef.cookbooks_path = "../chef-repo/cookbooks"
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
 
-        chef.add_recipe "setup"
-        chef.add_recipe "setup::mysql"
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::mysql"
+      chef.add_recipe "setup::mysql-replication"
 
-        chef.json = {
-            :setup => {
-                :namespace => "mysql.vb.ns.com",
-                :os_name   => "CentOS 6.5 x86",
-            }
+      chef.json = {
+        :setup => {
+          :namespace => "mysql.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        },
+        :mysql => {
+          :serverId => "1001"
         }
+      }
     end
+  end
+
+  config.vm.define "slave" do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.network :private_network, ip: '10.10.21.4'
+    node.vm.hostname = "slave"
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::mysql"
+      chef.add_recipe "setup::mysql-replication"
+
+      chef.json = {
+        :setup => {
+          :namespace => "mysql-slave.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        },
+        :mysql => {
+          :serverId => "1002"
+        }
+      }
+    end
+  end
 end

@@ -1,0 +1,17 @@
+
+[mysqld]
+datadir=/var/lib/mysql
+socket=/var/lib/mysql/mysql.sock
+
+symbolic-links=0
+
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+<% if node[:hostname] == @masterNode %>
+log-bin=mysql-bin
+<% end %>
+server-id=<%= @serverId %>
+
+[mysqld_safe]
+log-error=/var/log/mysqld.log
+pid-file=/var/run/mysqld/mysqld.pid

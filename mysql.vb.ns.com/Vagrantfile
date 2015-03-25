@@ -6,7 +6,7 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "chef/centos-6.5"
-    config.vm.network :private_network, ip: '10.10.20.12', netmask: '255.0.0.0'
+    config.vm.network :private_network, ip: '10.10.20.12'
 
     config.omnibus.chef_version = :latest
     config.vm.provision "chef_solo" do |chef|
@@ -14,9 +14,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
         chef.add_recipe "setup"
         chef.add_recipe "setup::mysql"
-        chef.add_recipe "setup::mysql-fabric"
-        chef.add_recipe "setup::docker"
-#        chef.add_recipe "docker::mysql-replication"
 
         chef.json = {
             :setup => {

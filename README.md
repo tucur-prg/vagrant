@@ -41,6 +41,7 @@ IP Address
 10.10.20.11 mongo.vb.ns.com  
 10.10.20.12 mysql.vb.ns.com
 10.10.20.13 aerospike.vb.ns.com  
+10.10.20.14 mariadb.vb.ns.com
 
 10.10.30.11 docker.vb.ns.com  
 10.10.30.12 rpm.vb.ns.com  

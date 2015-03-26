@@ -1,4 +1,8 @@
 
+execute "rpg-gpg-key" do
+  command "rpm --import https://yum.mariadb.org/RPM-GPG-KEY-MariaDB"
+end
+
 cookbook_file "/etc/yum.repos.d/MariaDB.repo" do
     action :create_if_missing
     source "yum.repo.MariaDB.repo"

@@ -5,21 +5,55 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "chef/centos-6.5"
-  config.vm.network :private_network, ip: '10.10.20.14'
+  config.vm.define "mariadb1" do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.network :private_network, ip: '10.10.20.14'
+    node.vm.hostname = "mariadb1"
 
-  config.omnibus.chef_version = :latest
-  config.vm.provision "chef_solo" do |chef|
-    chef.cookbooks_path = "../chef-repo/cookbooks"
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
 
-    chef.add_recipe "setup"
-    chef.add_recipe "setup::mariadb"
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::mariadb"
+      chef.add_recipe "setup::mariadb-galera-cluster"
 
-    chef.json = {
-      :setup => {
-        :namespace => "mariadb.vb.ns.com",
-        :os_name   => "CentOS 6.5 x86",
+      chef.json = {
+        :setup => {
+          :namespace => "mariadb.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        },
+        :mariadb => {
+          :clusterAddress => "10.10.21.14",
+          :nodeAddress => "10.10.20.14"
+        }
       }
-    }
+    end
+  end
+
+  config.vm.define "mariadb2" do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.network :private_network, ip: '10.10.21.14'
+    node.vm.hostname = "mariadb2"
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::mariadb"
+      chef.add_recipe "setup::mariadb-galera-cluster"
+
+      chef.json = {
+        :setup => {
+          :namespace => "mariadb2.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        },
+        :mariadb => {
+          :clusterAddress => "10.10.20.14",
+          :nodeAddress => "10.10.21.14"
+        }
+      }
+    end
   end
 end

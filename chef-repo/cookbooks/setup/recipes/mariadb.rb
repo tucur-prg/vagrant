@@ -19,6 +19,16 @@ end
   end
 end
 
+template "/etc/my.cnf.d/server.cnf" do
+  source "mariadb.server.cnf.erb"
+end
+
+template "/etc/my.cnf.d/handlersocket.cnf" do
+  source "mariadb.handlersocket.cnf.erb"
+  notifies :restart, "service[mysql]"
+end
+
 service "mysql" do
+  supports :restart => true
   action [ :enable, :start ]
 end

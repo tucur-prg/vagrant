@@ -1,0 +1,14 @@
+[mysqld]
+wsrep_cluster_name=DBCLUSTER
+wsrep_cluster_address=gcomm://<%= @clusterAddress %>
+wsrep_node_address=<%= @nodeAddress %>
+wsrep_provider='/usr/lib64/galera/libgalera_smm.so'
+wsrep_sst_method=rsync
+wsrep_slave_threads=4
+
+default_storage_engine=InnoDB
+
+binlog_format=ROW
+
+innodb_autoinc_lock_mode=2
+innodb_locks_unsafe_for_binlog=1

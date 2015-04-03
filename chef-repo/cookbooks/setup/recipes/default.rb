@@ -49,17 +49,7 @@ end
 
 ### Service Setup ################################
 
-%w{
-    auditd
-    blk-availability
-    iptables
-    ip6tables
-    lvm2-monitor
-    mdmonitor
-    netfs
-    postfix
-    udev-post
-}.each do |pkg|
+node[:service][:stop].each do |pkg|
     service "#{pkg}" do
         action [ :disable, :stop ]
     end

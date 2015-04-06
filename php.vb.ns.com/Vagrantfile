@@ -13,7 +13,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         chef.cookbooks_path = "../chef-repo/cookbooks"
 
         chef.add_recipe "setup"
-        chef.add_recipe "setup::php"
+#        chef.add_recipe "setup::php"
+        chef.add_recipe "setup::php52"
+        chef.add_recipe "setup::php-utils"
 
         chef.json = {
             :setup => {

@@ -5,40 +5,42 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.define :server do |node|
+  config.vm.define :master do |node|
     node.vm.box = "chef/centos-6.5"
-    node.vm.network :private_network, ip: '10.10.50.11'
+    node.vm.network :private_network, ip: '10.10.50.12'
 
     node.omnibus.chef_version = :latest
     node.vm.provision "chef_solo" do |chef|
      chef.cookbooks_path = "../chef-repo/cookbooks"
 
       chef.add_recipe "setup"
-      chef.add_recipe "setup::zabbix"
+      chef.add_recipe "setup::ssh-parent"
+      chef.add_recipe "setup::ruby"
+      chef.add_recipe "setup::capistrano"
 
       chef.json = {
        :setup => {
-         :namespace => "zabbix.vb.ns.com",
+         :namespace => "capistrano.vb.ns.com",
          :os_name   => "CentOS 6.5 x86",
        }
      }
    end
   end
 
-  config.vm.define :agent do |node|
+  config.vm.define :tmp1 do |node|
     node.vm.box = "chef/centos-6.5"
-    node.vm.network :private_network, ip: '10.10.51.11'
+    node.vm.network :private_network, ip: '10.10.51.12'
 
     node.omnibus.chef_version = :latest
     node.vm.provision "chef_solo" do |chef|
      chef.cookbooks_path = "../chef-repo/cookbooks"
 
      chef.add_recipe "setup"
-     chef.add_recipe "setup::zabbix-agent"
+     chef.add_recipe "setup::ssh-child"
 
      chef.json = {
        :setup => {
-         :namespace => "zabbix-agent.vb.ns.com",
+         :namespace => "tmp1.vb.ns.com",
          :os_name   => "CentOS 6.5 x86",
        }
      }

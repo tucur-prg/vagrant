@@ -47,8 +47,9 @@ IP Address
 10.10.30.11 docker.vb.ns.com  
 10.10.30.12 rpm.vb.ns.com  
 10.10.30.13 ansible.vb.ns.com  
+10.10.30.14 capistrano.vb.ns.com  
+10.10.30.15 serverspec.vb.ns.com
 
 10.10.40.11 android.vb.ns.com  
 
 10.10.50.11 zabbix.vb.ns.com  
-10.10.50.12 capistrano.vb.ns.com

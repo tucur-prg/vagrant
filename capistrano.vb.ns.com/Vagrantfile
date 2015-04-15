@@ -7,7 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define :master do |node|
     node.vm.box = "chef/centos-6.5"
-    node.vm.network :private_network, ip: '10.10.50.12'
+    node.vm.network :private_network, ip: '10.10.30.14'
 
     node.omnibus.chef_version = :latest
     node.vm.provision "chef_solo" do |chef|
@@ -29,7 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define :tmp1 do |node|
     node.vm.box = "chef/centos-6.5"
-    node.vm.network :private_network, ip: '10.10.51.12'
+    node.vm.network :private_network, ip: '10.10.31.14'
 
     node.omnibus.chef_version = :latest
     node.vm.provision "chef_solo" do |chef|

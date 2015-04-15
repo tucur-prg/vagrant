@@ -1,0 +1,11 @@
+[local-rpm]
+name = local rpm
+baseurl = http://10.10.5.11/yum/rpm/
+gpgcheck = 0
+enabled = 1
+
+[local-extra]
+name = local extra
+baseurl = http://10.10.5.11/yum/extra/
+gpgcheck = 0
+enabled = 0

@@ -1,0 +1,48 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define :server do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.network :private_network, ip: '10.10.5.11'
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::apache"
+      chef.add_recipe "setup::yum-repository"
+
+      chef.json = {
+        :setup => {
+          :namespace => "yum.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        }
+      }
+    end
+  end
+
+  config.vm.define :tmp1 do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.network :private_network, ip: '10.10.6.11'
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::yum-local"
+
+      chef.json = {
+        :setup => {
+          :namespace => "tmp1.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        }
+      }
+    end
+  end
+end

@@ -26,6 +26,8 @@ sudo権限あり
 IP Address
 ----------
 
+10.10.5.11 yum.vb.ns.com
+
 10.10.8.10 develop.vb.ns.com  
 
 10.10.10.11 scala.vb.ns.com  

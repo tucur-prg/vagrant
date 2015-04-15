@@ -8,6 +8,7 @@
     CustomLog logs/access_log combined
 
     <Directory <%= @document_root %>>
+        Options Indexes
         AllowOverride All
     </Directory>
 </VirtualHost>

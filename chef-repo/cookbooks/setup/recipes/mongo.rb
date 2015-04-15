@@ -4,7 +4,7 @@ cookbook_file "/etc/yum.repos.d/mongodb.repo" do
     source "yum.repo.mongodb.repo"
     owner "root"
     group "root"
-    mode 0644
+    mode "0644"
 end
 
 %w{

@@ -23,6 +23,7 @@ puts "---- while ----"
 
 i = 0
 
+# 真の間は繰り返す
 while i < 5 do
    if  i == 2
        break
@@ -30,6 +31,17 @@ while i < 5 do
 
    puts "#{i}: hello"
    i += 1
+end
+
+### until
+puts "---- until ----"
+
+i = 0
+
+# 偽の間は繰り返す
+until i > 5 do
+  puts "#{i}: hello"
+  i += 1
 end
 
 ### for

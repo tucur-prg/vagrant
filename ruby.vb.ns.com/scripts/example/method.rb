@@ -34,4 +34,3 @@ end
 puts myfunc("foo")
 puts myfunc("bar")
 puts myfunc()
-

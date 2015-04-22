@@ -21,6 +21,7 @@ node_modules/
 *.msi
 *.app
 *.dmg
+*.class
 
 # その他
 .DS_Store*

@@ -55,3 +55,4 @@ IP Address
 10.10.40.11 android.vb.ns.com  
 
 10.10.50.11 zabbix.vb.ns.com  
+10.10.50.12 testing.vb.ns.com

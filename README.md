@@ -45,6 +45,7 @@ IP Address
 10.10.20.13 aerospike.vb.ns.com  
 10.10.20.14 mariadb.vb.ns.com
 10.10.20.15 orientdb.vb.ns.com
+10.10.20.16 couchbase.vb.ns.com
 
 10.10.30.11 docker.vb.ns.com  
 10.10.30.12 rpm.vb.ns.com  

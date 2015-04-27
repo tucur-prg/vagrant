@@ -16,12 +16,14 @@ node_modules/
 # Golang
 *.syso
 
+# Java
+*.class
+
 # binary file
 *.exe
 *.msi
 *.app
 *.dmg
-*.class
 
 # その他
 .DS_Store*
@@ -30,3 +32,20 @@ node_modules/
 *.out
 Thumbs.db
 desktop.ini
+
+# Play
+logs
+project/project
+project/target
+target
+tmp
+.history
+dist
+/.idea
+/*.iml
+/out
+/.idea_modules
+/.classpath
+/.project
+/RUNNING_PID
+/.settings

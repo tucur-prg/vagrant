@@ -5,22 +5,22 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-    config.vm.box = "chef/centos-6.5"
-    config.vm.network :private_network, ip: '10.10.10.13'
+  config.vm.box = "chef/centos-6.5"
+  config.vm.network :private_network, ip: '10.10.10.13'
 
-    config.omnibus.chef_version = :latest
-    config.vm.provision "chef_solo" do |chef|
-        chef.cookbooks_path = "../chef-repo/cookbooks"
+  config.omnibus.chef_version = :latest
+  config.vm.provision "chef_solo" do |chef|
+    chef.cookbooks_path = "../chef-repo/cookbooks"
 
-        chef.add_recipe "setup"
-        chef.add_recipe "setup::node"
-        chef.add_recipe "setup::mongo"
+    chef.add_recipe "setup"
+    chef.add_recipe "setup::node"
+    chef.add_recipe "setup::mongo"
 
-        chef.json = {
-            :setup => {
-                :namespace => "node.vb.ns.com",
-                :os_name   => "CentOS 6.5 x86",
-            }
-        }
-    end
+    chef.json = {
+      :setup => {
+        :namespace => "node.vb.ns.com",
+        :os_name   => "CentOS 6.5 x86",
+      }
+    }
+  end
 end

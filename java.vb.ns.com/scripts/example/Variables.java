@@ -42,6 +42,15 @@ public class Variables {
         System.out.println(s);
         System.out.println(s + "hijklmn");
 
+        // 文字列を比較するときは比較演算子では比較できません。
+        // trueが返ってくる場合がありますが、それはStringクラスの参照先が同じポインタを見ている為です。
+        // ポインタが違うものを指した段階でfalseになります。
+        String s2 = "abcdef";
+        s2 += "g";
+
+        System.out.println(s == s2);
+        System.out.println(s.equals(s2));
+
         // 利用可能なメソッド
         System.out.println(s.substring(2, 5));
         System.out.println(s.replaceAll("abc", "ABC"));

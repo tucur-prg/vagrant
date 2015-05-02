@@ -8,7 +8,7 @@ cookbook_file "/etc/yum.repos.d/MariaDB.repo" do
     source "yum.repo.MariaDB.repo"
     owner "root"
     group "root"
-    mode 0644
+    mode "0644"
 end
 
 %w{

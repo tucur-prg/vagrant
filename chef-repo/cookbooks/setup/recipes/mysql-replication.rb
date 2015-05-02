@@ -16,7 +16,7 @@ template "/etc/my.cnf" do
 
   owner "root"
   group "root"
-  mode 0644
+  mode "0644"
 
   variables({
     :masterNode => masterNode,

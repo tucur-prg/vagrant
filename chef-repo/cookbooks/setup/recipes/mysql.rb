@@ -1,8 +1,8 @@
 
 remote_file "#{Chef::Config[:file_cache_path]}/mysql-community-release-el6-5.noarch.rpm" do
+  action :create_if_missing
   source "http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm"
   not_if "rpm -qa | grep -q '^mysql-community-release'"
-  action :create
   notifies :install, "rpm_package[mysql-community-release]", :immediately
 end
 

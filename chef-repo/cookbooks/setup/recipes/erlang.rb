@@ -1,4 +1,4 @@
 
 yum_package "erlang" do
-    options '--enablerepo=epel'
+  options '--enablerepo=epel'
 end

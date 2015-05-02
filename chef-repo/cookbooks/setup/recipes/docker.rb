@@ -1,23 +1,23 @@
 
 %w{
-    device-mapper-event-libs
+  device-mapper-event-libs
 }.each do |pkg|
-    yum_package "#{pkg}" do
-        action :upgrade
-    end
+  yum_package "#{pkg}" do
+    action :upgrade
+  end
 end
 
 %w{
-    docker-io
+  docker-io
 }.each do |pkg|
-    yum_package "#{pkg}" do
-    end
+  yum_package "#{pkg}" do
+  end
 end
 
 %w{
-    docker
+  docker
 }.each do |pkg|
-    service "#{pkg}" do
-        action [ :enable, :start ]
-    end
+  service "#{pkg}" do
+    action [ :enable, :start ]
+  end
 end

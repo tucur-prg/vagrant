@@ -5,50 +5,50 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-    config.vm.define "host" do |node|
-        node.vm.box = "chef/centos-6.5"
-        node.vm.network :private_network, ip: '10.10.30.13'
+  config.vm.define "host" do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.network :private_network, ip: '10.10.30.13'
 
-        node.omnibus.chef_version = :latest
-        node.vm.provision "chef_solo" do |chef|
-            chef.cookbooks_path = "../chef-repo/cookbooks"
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
 
-            chef.add_recipe "setup"
-            chef.add_recipe "setup::ansible"
-            chef.add_recipe "setup::ssh-parent"
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::ansible"
+      chef.add_recipe "setup::ssh-parent"
 
-            chef.json = {
-                :setup => {
-                    :namespace => "ansible.vb.ns.com",
-                    :os_name   => "CentOS 6.5 x86",
-                }
-            }
-        end
+      chef.json = {
+        :setup => {
+          :namespace => "ansible.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        }
+      }
     end
+  end
 
-    config.vm.define "web" do |node|
-        node.vm.box = "chef/centos-6.5"
-        node.vm.hostname = "web"
-        node.vm.network :private_network, ip: '10.10.31.1'
+  config.vm.define "web" do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.hostname = "web"
+    node.vm.network :private_network, ip: '10.10.31.1'
 
-        node.omnibus.chef_version = :latest
-        node.vm.provision "chef_solo" do |chef|
-            chef.cookbooks_path = "../chef-repo/cookbooks"
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
 
-            chef.add_recipe "setup::ssh-child"
-        end
+      chef.add_recipe "setup::ssh-child"
     end
+  end
 
-    config.vm.define "db" do |node|
-        node.vm.box = "chef/centos-6.5"
-        node.vm.hostname = "db"
-        node.vm.network :private_network, ip: '10.10.31.2'
+  config.vm.define "db" do |node|
+    node.vm.box = "chef/centos-6.5"
+    node.vm.hostname = "db"
+    node.vm.network :private_network, ip: '10.10.31.2'
 
-        node.omnibus.chef_version = :latest
-        node.vm.provision "chef_solo" do |chef|
-            chef.cookbooks_path = "../chef-repo/cookbooks"
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
 
-            chef.add_recipe "setup::ssh-child"
-        end
+      chef.add_recipe "setup::ssh-child"
     end
+  end
 end

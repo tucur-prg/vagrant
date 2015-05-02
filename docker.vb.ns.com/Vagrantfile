@@ -8,12 +8,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.vm.box = "chef/centos-6.5"
     config.vm.network :private_network, ip: '10.10.30.11'
 
+    config.vm.provider "virtualbox" do |vb|
+        vb.memory = "1024"
+    end
+
     config.omnibus.chef_version = :latest
     config.vm.provision "chef_solo" do |chef|
         chef.cookbooks_path = "../chef-repo/cookbooks"
 
         chef.add_recipe "setup"
         chef.add_recipe "setup::docker"
+        chef.add_recipe "docker::java"
 
         chef.json = {
             :setup => {

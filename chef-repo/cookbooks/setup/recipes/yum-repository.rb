@@ -18,10 +18,10 @@ templates "/etc/httpd/conf.d/vhost.conf" do
   source "apache.vhost.conf.erb"
   owner "root"
   group "root"
-  mode 0644
+  mode "0644"
   variables({
-      :hostname      => "yum.vb.ns.com",
-      :document_root => "/var/www/html"
+    :hostname      => "yum.vb.ns.com",
+    :document_root => "/var/www/html"
   })
   notifies :restart, "service[httpd]"
 end

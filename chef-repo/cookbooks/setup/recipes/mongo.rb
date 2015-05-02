@@ -1,23 +1,23 @@
 
 cookbook_file "/etc/yum.repos.d/mongodb.repo" do
-    action :create_if_missing
-    source "yum.repo.mongodb.repo"
-    owner "root"
-    group "root"
-    mode "0644"
+  action :create_if_missing
+  source "yum.repo.mongodb.repo"
+  owner "root"
+  group "root"
+  mode "0644"
 end
 
 %w{
-    mongodb-org
+  mongodb-org
 }.each do |pkg|
-    yum_package "#{pkg}" do
-    end
+  yum_package "#{pkg}" do
+  end
 end
 
 %w{
-    mongod
+  mongod
 }.each do |pkg|
-    service "#{pkg}" do
-        action [ :enable, :start ]
-    end
+  service "#{pkg}" do
+    action [ :enable, :start ]
+  end
 end

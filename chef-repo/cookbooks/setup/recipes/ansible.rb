@@ -1,7 +1,7 @@
 
 %w{
-    ansible
+  ansible
 }.each do |pkg|
-    yum_package "#{pkg}" do
-    end
+  yum_package "#{pkg}" do
+  end
 end

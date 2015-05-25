@@ -18,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.add_recipe "setup"
     chef.add_recipe "setup::docker"
-    chef.add_recipe "docker::java"
+#    chef.add_recipe "docker::java"
 
     chef.json = {
       :setup => {

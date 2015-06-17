@@ -1,0 +1,16 @@
+<source>
+  type tail
+  format json
+  path /tmp/app.log
+  tag app.log
+  pos_file /tmp/tda-pos.txt
+</source>
+
+<match app.**>
+  type forward
+  <server>
+    host <%= @collector_addr %>
+    port 24224
+  </server>
+  flush_interval 1s
+</match>

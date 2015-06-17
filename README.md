@@ -26,7 +26,7 @@ sudo権限あり
 IP Address
 ----------
 
-10.10.5.11 yum.vb.ns.com
+10.10.5.11 yum.vb.ns.com  
 
 10.10.8.10 develop.vb.ns.com  
 
@@ -41,20 +41,21 @@ IP Address
 10.10.10.19 php.vb.ns.com  
 
 10.10.20.11 mongo.vb.ns.com  
-10.10.20.12 mysql.vb.ns.com
+10.10.20.12 mysql.vb.ns.com  
 10.10.20.13 aerospike.vb.ns.com  
-10.10.20.14 mariadb.vb.ns.com
-10.10.20.15 orientdb.vb.ns.com
-10.10.20.16 couchbase.vb.ns.com
+10.10.20.14 mariadb.vb.ns.com  
+10.10.20.15 orientdb.vb.ns.com  
+10.10.20.16 couchbase.vb.ns.com  
 
 10.10.30.11 docker.vb.ns.com  
 10.10.30.12 rpm.vb.ns.com  
 10.10.30.13 ansible.vb.ns.com  
 10.10.30.14 capistrano.vb.ns.com  
-10.10.30.15 serverspec.vb.ns.com
+10.10.30.15 serverspec.vb.ns.com  
+10.10.30.16 fluentd.vb.ns.com  
 
 10.10.40.11 android.vb.ns.com  
 
 10.10.50.11 zabbix.vb.ns.com  
-10.10.50.12 testing.vb.ns.com
-10.10.50.13 jenkins.vb.ns.com
+10.10.50.12 testing.vb.ns.com  
+10.10.50.13 jenkins.vb.ns.com  

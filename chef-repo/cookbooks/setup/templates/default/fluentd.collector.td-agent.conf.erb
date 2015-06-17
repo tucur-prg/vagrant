@@ -1,0 +1,15 @@
+
+<source>
+  type forward
+  port 24224
+</source>
+
+<match app.**>
+  type copy
+  <store>
+    type file
+    path /tmp/test.log
+    time_slice_format %Y%m%d
+    time_format %F %T
+  </store>
+</match>

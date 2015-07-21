@@ -11,3 +11,5 @@ default[:fluentd] = {
     :address => '127.0.0.1',
   },
 }
+
+default[:couchbase][:repo] = 'http://packages.couchbase.com/rpm/6.2/x86_64'

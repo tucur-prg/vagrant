@@ -1,0 +1,6 @@
+[couchbase]
+enabled = 1
+name = Couchbase package repository
+baseurl = <%= node[:couchbase][:repo] %>
+gpgcheck = 1
+gpgkey = http://packages.couchbase.com/rpm/couchbase-rpm.key

@@ -14,5 +14,6 @@ rpm_package "#{package}" do
 end
 
 service "couchbase-server" do
+  only_if { node[:hostname] == "cluster" }
   action [ :enable, :start ]
 end

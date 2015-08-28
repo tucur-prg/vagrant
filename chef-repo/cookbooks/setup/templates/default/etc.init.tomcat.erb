@@ -1,0 +1,51 @@
+#
+# Startup script for the Tomcat
+#
+# chkconfig: 345 90 10
+# description: Apache Tomcat is the Web container for Java Servlet & JSP.
+
+JAVA_HOME=<%= @java_home %>
+CATALINA_HOME=<%= @tomcat_home %>
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+[ -f $CATALINA_HOME/bin/startup.sh ] || exit 0
+[ -f $CATALINA_HOME/bin/shutdown.sh ] || exit 0
+
+RETVAL=0
+
+start() {
+    echo -n "Starting tomcat: "
+    daemon --user "nobody" "$CATALINA_HOME/bin/startup.sh"
+    echo
+    return $RETVAL
+}
+stop() {
+    echo -n "Stopping tomcat:"
+    daemon --user nobody $CATALINA_HOME/bin/shutdown.sh
+    echo
+    return $RETVAL
+}
+restart() {
+    stop
+    sleep 2
+    start
+}
+
+case "$1" in
+start)
+    start
+    ;;
+stop)
+    stop
+    ;;
+restart|reload)
+    restart
+    ;;
+*)
+    echo "Usage: $0 {start|stop|restart}"
+    exit 1
+esac
+
+exit $?

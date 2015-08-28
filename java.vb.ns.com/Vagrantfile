@@ -5,7 +5,7 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "chef/centos-6.5"
+  config.vm.box = "chef/centos-6.6"
   config.vm.network :private_network, ip: '10.10.10.15'
 
   config.vm.provider "virtualbox" do |vb|
@@ -18,12 +18,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.add_recipe "setup"
     chef.add_recipe "setup::java"
+    chef.add_recipe "setup::tomcat"
+    chef.add_recipe "setup::java-build"
     chef.add_recipe "setup::java-play"
 
     chef.json = {
       :setup => {
         :namespace => "java.vb.ns.com",
-        :os_name   => "CentOS 6.5 x86",
+        :os_name   => "CentOS 6.6 x86",
       }
     }
   end

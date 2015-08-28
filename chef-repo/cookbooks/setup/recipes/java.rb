@@ -1,13 +1,13 @@
 
-remote_file "#{Chef::Config[:file_cache_path]}/jdk-8u25-linux-x64.rpm" do
+remote_file "#{Chef::Config[:file_cache_path]}/#{node[:java][:jdk][:package]}" do
   action :create_if_missing
-  source "http://download.oracle.com/otn-pub/java/jdk/8u25-b17/jdk-8u25-linux-x64.rpm"
+  source node[:java][:jdk][:path] + node[:java][:jdk][:package]
   headers 'Cookie' => 'oraclelicense=accept-securebackup-cookie'
 end
 
 rpm_package "install java8" do
   not_if "rpm -qa | grep -q '^jdk1.8'"
-  source "#{Chef::Config[:file_cache_path]}/jdk-8u25-linux-x64.rpm"
+  source "#{Chef::Config[:file_cache_path]}/#{node[:java][:jdk][:package]}"
 end
 
 template "/etc/profile.d/java.sh" do
@@ -15,4 +15,7 @@ template "/etc/profile.d/java.sh" do
   owner "root"
   group "root"
   mode "0644"
+  variables({
+    :java_home => node[:java][:home],
+  })
 end

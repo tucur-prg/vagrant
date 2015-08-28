@@ -1,11 +1,7 @@
 
-%w{
-  ansible
-}.each do |pkg|
-  yum_package "#{pkg}" do
-  end
+yum_package "ansible" do
 end
 
-templates '/etc/ansible/ansible.cfg' do
+template '/etc/ansible/ansible.cfg' do
   source 'etc.ansible.cfg.erb'
 end

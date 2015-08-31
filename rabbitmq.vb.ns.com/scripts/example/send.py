@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# pip install pika==0.9.8
 import pika
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(

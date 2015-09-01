@@ -1,11 +1,5 @@
 # coding: UTF-8
 
-#
-# 事前準備
-# yum -y install python-devel.x86_64 libcouchbase2-libevent libcouchbase-devel
-# pip install couchbase
-#
-
 # setup時にbeer-sampleを登録しておく
 
 from couchbase.bucket import Bucket

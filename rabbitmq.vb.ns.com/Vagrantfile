@@ -5,23 +5,74 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "chef/centos-6.6"
-  config.vm.network :private_network, ip: '10.10.20.17'
+  config.vm.define :master do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.20.17'
 
-  config.omnibus.chef_version = :latest
-  config.vm.provision "chef_solo" do |chef|
-    chef.cookbooks_path = "../chef-repo/cookbooks"
+    node.vm.hostname = "master"
 
-    chef.add_recipe "setup"
-    chef.add_recipe "setup::python"
-    chef.add_recipe "setup::erlang"
-    chef.add_recipe "setup::rabbitmq"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+    end
 
-    chef.json = {
-      :setup => {
-        :namespace => "rabbitmq.vb.ns.com",
-        :os_name   => "CentOS 6.6 x86",
+    node.vm.provision :shell, :inline => <<-SCRIPT
+      if ! grep '10.10.21.17' /etc/hosts > /dev/null 2>&1; then
+        echo "10.10.21.17 slave1" >> /etc/hosts
+      fi
+    SCRIPT
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::python"
+      chef.add_recipe "setup::erlang"
+      chef.add_recipe "setup::rabbitmq"
+
+      chef.json = {
+        :setup => {
+          :namespace => "rabbitmq.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        }
       }
-    }
+    end
+  end
+
+  config.vm.define :slave1 do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.21.17'
+
+    node.vm.hostname = "slave1"
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.customize ["modifyvm", :id, "--natnet1", "10.0.3.0/24"]
+      vb.customize ["modifyvm", :id, "--macaddress1", "080027B4224C"]
+    end
+
+    node.vm.provision :shell, :inline => <<-SCRIPT
+      if ! grep '10.10.20.17' /etc/hosts > /dev/null 2>&1; then
+        echo "10.10.20.17 master" >> /etc/hosts
+      fi
+    SCRIPT
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::python"
+      chef.add_recipe "setup::erlang"
+      chef.add_recipe "setup::rabbitmq"
+      chef.add_recipe "setup::rabbitmq-cluster"
+
+      chef.json = {
+        :setup => {
+          :namespace => "rabbitmq.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        }
+      }
+    end
   end
 end

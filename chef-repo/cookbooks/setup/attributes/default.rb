@@ -33,6 +33,19 @@ default[:java] = {
 default[:couchbase][:repo] = 'http://packages.couchbase.com/rpm/6.2/x86_64'
 
 default[:rabbitmq] = {
+  :cookie  => 'HMVQXUTOIDNGKHFROVLL',
   :path    => 'http://www.rabbitmq.com/releases/rabbitmq-server/v3.5.4/',
   :package => 'rabbitmq-server-3.5.4-1.noarch.rpm',
+  :master  => 'master',
+  :account => {
+    :user => 'admin',
+    :password => '0000',
+    :tags => 'administrator',
+    :permissions => {
+      :path => '/',
+      :settings => '.*',
+      :write => '.*',
+      :read => '.*',
+    }
+  }
 }

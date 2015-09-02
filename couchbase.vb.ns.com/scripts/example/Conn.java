@@ -18,9 +18,10 @@ public class Conn {
         try {
             Logger.getLogger("com.couchbase.client").setLevel(Level.OFF);
 
-            if (args.length != 2) {
+            if (args.length != 3) {
                 System.err.println("Error invalid arguments.");
-                System.err.println("Send <host> <bucket>");
+                System.err.println("Send <host> <bucket> <remove>");
+                System.err.println("remove: n=登録後に削除しない, y=登録後に削除する");
                 System.exit(0);
             }
 
@@ -50,6 +51,10 @@ public class Conn {
             JsonDocument my = bucket.get("my-first-document");
 
             System.out.println("Found: " + my);
+
+            if ("y".equals(args[2])) {
+                bucket.remove("my-first-document");
+            }
 
             bucket.close();
             cluster.disconnect();

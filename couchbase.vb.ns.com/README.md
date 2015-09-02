@@ -18,21 +18,17 @@ $ python insert.py
 
 **関連ファイルのダウンロード**
 ```
-$ wget http://central.maven.org/maven2/com/couchbase/client/couchbase-client/1.4.10/couchbase-client-1.4.10.jar
-$ wget http://central.maven.org/maven2/net/spy/spymemcached/2.11.4/spymemcached-2.11.4.jar
-$ wget http://central.maven.org/maven2/org/codehaus/jettison/jettison/1.1/jettison-1.1.jar
-$ wget http://central.maven.org/maven2/org/jboss/netty/netty/3.2.0.Final/netty-3.2.0.Final.jar
-$ wget http://central.maven.org/maven2/commons-codec/commons-codec/1.5/commons-codec-1.5.jar
-$ wget http://central.maven.org/maven2/org/apache/httpcomponents/httpcore/4.3/httpcore-4.3.jar
-$ wget http://central.maven.org/maven2/org/apache/httpcomponents/httpcore-nio/4.3.2/httpcore-nio-4.3.2.jar
+$ wget http://central.maven.org/maven2/com/couchbase/client/java-client/2.1.4/java-client-2.1.4.jar
+$ wget http://central.maven.org/maven2/com/couchbase/client/core-io/1.1.4/core-io-1.1.4.jar
+$ wget http://central.maven.org/maven2/io/reactivex/rxjava/1.0.2/rxjava-1.0.2.jar
 ```
 
 **コンパイル**
 ```
-$ javac -cp couchbase-client-1.4.10.jar:spymemcached-2.11.4.jar Send.java
+$ javac -cp java-client-2.1.4.jar:core-io-1.1.4.jar Conn.java
 ```
 
 **実行**
 ```
-$ java -cp .:couchbase-client-1.4.10.jar:spymemcached-2.11.4.jar:jettison-1.1.jar:netty-3.2.0.Final.jar:commons-codec-1.5.jar:httpcore-4.3.jar:httpcore-nio-4.3.2.jar Send
+$ java -cp .:java-client-2.1.4.jar:core-io-1.1.4.jar:rxjava-1.0.2.jar
 ```

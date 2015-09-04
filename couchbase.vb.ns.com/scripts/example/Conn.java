@@ -20,7 +20,7 @@ public class Conn {
 
             if (args.length != 3) {
                 System.err.println("Error invalid arguments.");
-                System.err.println("Send <host> <bucket> <remove>");
+                System.err.println("Conn <host> <bucket> <remove>");
                 System.err.println("remove: n=登録後に削除しない, y=登録後に削除する");
                 System.exit(0);
             }

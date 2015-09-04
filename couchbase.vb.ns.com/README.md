@@ -30,5 +30,5 @@ $ javac -cp java-client-2.1.4.jar:core-io-1.1.4.jar Conn.java
 
 **実行**
 ```
-$ java -cp .:java-client-2.1.4.jar:core-io-1.1.4.jar:rxjava-1.0.2.jar
+$ java -cp .:java-client-2.1.4.jar:core-io-1.1.4.jar:rxjava-1.0.2.jar Conn <host> <bucket> <remove>
 ```

@@ -30,6 +30,6 @@ $ javac -cp rabbitmq-client.jar Send.java Recv.java
 
 **実行**
 ```
-$ java -cp .:commons-io-1.2.jar:commons-cli-1.1.jar:rabbitmq-client.jar Send
-$ java -cp .:commons-io-1.2.jar:commons-cli-1.1.jar:rabbitmq-client.jar Recv
+$ java -cp .:commons-io-1.2.jar:commons-cli-1.1.jar:rabbitmq-client.jar Send <host> <user> <queue_name>
+$ java -cp .:commons-io-1.2.jar:commons-cli-1.1.jar:rabbitmq-client.jar Recv <host> <user> <queue_name>
 ```

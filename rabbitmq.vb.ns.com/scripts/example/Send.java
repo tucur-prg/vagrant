@@ -1,23 +1,43 @@
+import java.io.Console;
+
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
 public class Send {
-    private final static String QUEUE_NAME = "hello";
+    public static void main(String[] args) throws Exception {
+        if (args.length != 3) {
+            System.err.println("Error invalid arguments.");
+            System.err.println("Send <host> <user> <queue_name>");
+            System.exit(0);
+        }
 
-    public static void main(String[] argv) throws Exception {
+        String host = args[0];
+        String username = args[1];
+        String queueName = args[2];
+
+        Console c = System.console();
+        if (c == null) {
+            System.err.println("No console.");
+            System.exit(0);
+        }
+
+        char[] password = c.readPassword("Password: ");
+
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
+        factory.setHost(host);
+        factory.setUsername(username);
+        factory.setPassword(String.valueOf(password));
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
         String message = "Hello World!";
-        channel.basicPublish("", QUEUE_NAME, null, message.getBytes());
+
+        channel.queueDeclare(queueName, false, false, false, null);
+        channel.basicPublish("", queueName, null, message.getBytes());
         System.out.println("[x] Send '" + message + "'");
 
         channel.close();
         connection.close();
     }
 }
-

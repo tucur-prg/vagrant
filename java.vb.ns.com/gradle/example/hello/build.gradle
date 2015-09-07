@@ -1,0 +1,4 @@
+// gradle helloWorld
+task helloWorld << {
+    println "Hello World!"
+}

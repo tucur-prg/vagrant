@@ -19,7 +19,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.add_recipe "setup"
     chef.add_recipe "setup::java"
     chef.add_recipe "setup::tomcat"
-    chef.add_recipe "setup::java-build"
+    chef.add_recipe "setup::java-gradle"
+    chef.add_recipe "setup::java-maven"
     chef.add_recipe "setup::java-play"
 
     chef.json = {

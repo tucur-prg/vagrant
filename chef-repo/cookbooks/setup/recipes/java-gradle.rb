@@ -1,15 +1,27 @@
 
-remote_file "#{Chef::Config[:file_cache_path]}/gradle-2.2.1-all.zip" do
-  action :create_if_missing
-  source "https://services.gradle.org/distributions/gradle-2.2.1-all.zip"
+execute "gvm install" do
+  command <<-EOH
+    su #{node[:java][:build_user]} -l -c 'curl -s get.gvmtool.net | bash'
+  EOH
 end
 
-bash "install gradle" do
-  not_if "ls /usr/share/gradle-2.2.1"
-  code <<-EOH
-    cd "#{Chef::Config[:file_cache_path]}"
-    unzip "#{Chef::Config[:file_cache_path]}/gradle-2.2.1-all.zip"
-    mv "gradle-2.2.1" "/usr/share/gradle-2.2.1"
-    ln -s "/usr/share/gradle-2.2.1/bin/gradle" "/usr/bin/gradle"
+bash "gvm shell" do
+  user "#{node[:java][:build_user]}"
+  code <<-EOC
+    source "/home/#{node[:java][:build_user]}/.gvm/bin/gvm-init.sh"
+  EOC
+end
+
+execute "Groovy install" do
+  command <<-EOH
+    su #{node[:java][:build_user]} -l -c 'gvm install groovy'
+    su #{node[:java][:build_user]} -l -c 'groovy -v'
+  EOH
+end
+
+execute "Gradle install" do
+  command <<-EOH
+    su #{node[:java][:build_user]} -l -c 'gvm install gradle'
+    su #{node[:java][:build_user]} -l -c 'gradle -v'
   EOH
 end

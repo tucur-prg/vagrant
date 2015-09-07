@@ -14,9 +14,11 @@ bash "install activator" do
   EOH
 end
 
+=begin
 template "/etc/profile.d/play.sh" do
   source "etc.profile.play.sh.erb"
   owner "root"
   group "root"
   mode "0644"
 end
+=end

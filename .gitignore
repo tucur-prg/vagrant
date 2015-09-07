@@ -20,6 +20,10 @@ node_modules/
 *.class
 *.jar
 
+# Java Build
+.gradle
+build/
+
 # binary file
 *.exe
 *.msi

@@ -1,12 +1,12 @@
 
-package = "couchbase-server-community_2.2.0_x86_64"
+package = "couchbase-server-community-3.0.1-centos6.x86_64"
 
 template '/etc/yum.repos.d/couchbase.repo' do
   source 'yum.repo.couchbase.repo.erb'
 end
 
 remote_file "/usr/local/src/#{package}.rpm" do
-  source "http://packages.couchbase.com/releases/2.2.0/#{package}.rpm"
+  source "http://packages.couchbase.com/releases/3.0.1/#{package}.rpm"
 end
 
 rpm_package "#{package}" do
@@ -14,6 +14,10 @@ rpm_package "#{package}" do
 end
 
 service "couchbase-server" do
-  only_if { node[:hostname] == "cluster" }
   action [ :enable, :start ]
+end
+
+# 起動が終わるまで待機する
+execute "sleep" do
+  command "sleep 30s"
 end

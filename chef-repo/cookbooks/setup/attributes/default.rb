@@ -1,4 +1,6 @@
 
+default[:hosts] = []
+
 default[:rbenv] = {
   :ruby => {
     :versions => ["2.1.2"],
@@ -30,7 +32,16 @@ default[:java] = {
   }
 }
 
-default[:couchbase][:repo] = 'http://packages.couchbase.com/rpm/6.2/x86_64'
+default[:couchbase] = {
+  :repo => 'http://packages.couchbase.com/rpm/6.2/x86_64',
+  :admin => {
+    :user => 'Administrator',
+    :password => '000000',
+  },
+  :ramsize => 512,
+  :first => '127.0.0.1',
+  :node => '127.0.0.1',
+}
 
 default[:rabbitmq] = {
   :cookie  => 'HMVQXUTOIDNGKHFROVLL',

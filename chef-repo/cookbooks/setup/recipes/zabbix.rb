@@ -1,12 +1,8 @@
 
-## Variables
-password = "zabbix"
-
 ## Include
 include_recipe "setup::mysql"
 
 ## Settings
-
 remote_file "#{Chef::Config[:file_cache_path]}/zabbix-release-2.4-1.el6.noarch.rpm" do
   action :create_if_missing
   source "http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-release-2.4-1.el6.noarch.rpm"
@@ -39,11 +35,11 @@ template "/etc/zabbix/zabbix_server.conf" do
   mode 0640
 
   variables({
-    :password => password,
+    :password => node['zabbix']['password'],
   })
 end
 
-template "/usr/share/doc/zabbix-server-mysql-2.4.4/create/setup.sql" do
+template "/usr/share/doc/zabbix-server-mysql-#{node['zabbix']['version']}/create/setup.sql" do
   action :create_if_missing
   source "zabbix.setup.sql.erb"
   owner "root"
@@ -51,7 +47,7 @@ template "/usr/share/doc/zabbix-server-mysql-2.4.4/create/setup.sql" do
   mode "0644"
 
   variables({
-    :password => password,
+    :password => node['zabbix']['password'],
   })
 
   notifies :run, "execute[zabbix-setup]", :immediately
@@ -79,7 +75,7 @@ end
 
 execute "zabbix-setup" do
   action :nothing
-  command "/usr/bin/mysql -u root < /usr/share/doc/zabbix-server-mysql-2.4.4/create/setup.sql"
+  command "/usr/bin/mysql -u root < /usr/share/doc/zabbix-server-mysql-#{node['zabbix']['version']}/create/setup.sql"
 
   notifies :run, "execute[zabbix-create-schema]", :immediately
   notifies :run, "execute[zabbix-insert-images]", :immediately
@@ -88,17 +84,17 @@ end
 
 execute "zabbix-create-schema" do
   action :nothing
-  command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.4/create/schema.sql"
+  command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-#{node['zabbix']['version']}/create/schema.sql"
 end
 
 execute "zabbix-insert-images" do
   action :nothing
-  command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.4/create/images.sql"
+  command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-#{node['zabbix']['version']}/create/images.sql"
 end
 
 execute "zabbix-insert-data" do
   action :nothing
-  command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-2.4.4/create/data.sql"
+  command "/usr/bin/mysql -u root zabbix < /usr/share/doc/zabbix-server-mysql-#{node['zabbix']['version']}/create/data.sql"
 end
 
 ## Service

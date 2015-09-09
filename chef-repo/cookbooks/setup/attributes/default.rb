@@ -60,3 +60,8 @@ default[:rabbitmq] = {
     }
   }
 }
+
+default[:zabbix] = {
+  :version => '2.4.6',
+  :password => 'zabbix',
+}

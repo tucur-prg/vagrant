@@ -65,3 +65,7 @@ default[:zabbix] = {
   :version => '2.4.6',
   :password => 'zabbix',
 }
+
+default[:zabbix_agent] = {
+  :server => '127.0.0.1',
+}

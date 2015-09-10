@@ -32,6 +32,12 @@ build/
 *.msi
 *.app
 *.dmg
+*.rpm
+
+# compression
+*.tar
+*.tar.gz
+*.tgz
 
 # その他
 .DS_Store*

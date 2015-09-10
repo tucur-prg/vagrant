@@ -19,7 +19,6 @@ end
   zabbix-server-mysql
   zabbix-web-mysql
   zabbix-web-japanese
-  zabbix-agent
   zabbix-get
 }.each do |pkg|
   yum_package "#{pkg}" do
@@ -32,11 +31,22 @@ template "/etc/zabbix/zabbix_server.conf" do
   source "zabbix.zabbix_server.conf.erb"
   owner "root"
   group "root"
-  mode 0640
+  mode "0640"
 
   variables({
     :password => node['zabbix']['password'],
   })
+end
+
+template "/etc/zabbix/web/zabbix.conf.php" do
+  action :create
+  source "zabbix.web.zabbix.conf.php.erb"
+  owner "apache"
+  group "apache"
+  mode "0640"
+end
+
+directory "/etc/zabbix/zabbix_server.conf.d" do
 end
 
 template "/usr/share/doc/zabbix-server-mysql-#{node['zabbix']['version']}/create/setup.sql" do

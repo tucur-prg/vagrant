@@ -11,30 +11,18 @@ rpm_package "zabbix-release" do
   action :nothing
 end
 
-%w{
-  zabbix-agent
-}.each do |pkg|
-  yum_package "#{pkg}" do
-    options '--enablerepo=zabbix'
-  end
+yum_package "zabbix-java-gateway" do
+  options '--enablerepo=zabbix'
 end
 
-template "/etc/zabbix/zabbix_agentd.conf" do
+template "/etc/zabbix/zabbix_server.conf.d/java_gateway.conf" do
   action :create
-  source "zabbix.zabbix_agentd.conf.erb"
+  source "zabbix.zabbix_server.java_gateway.conf.erb"
   owner "root"
   group "root"
   mode "0640"
-
-  variables({
-    :server => node['zabbix_agent']['server'],
-  })
 end
 
-%w{
-  zabbix-agent
-}.each do |pkg|
-  service "#{pkg}" do
-    action [ :enable, :start ]
-  end
+service "zabbix-java-gateway" do
+  action [ :enable, :start ]
 end

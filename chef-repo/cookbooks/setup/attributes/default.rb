@@ -61,6 +61,15 @@ default[:rabbitmq] = {
   }
 }
 
+default[:rundeck] = {
+  :hostname => 'localhost',
+  :port => '4440',
+  :adminuser => {
+    :username => 'admin',
+    :password => 'password',
+  }
+}
+
 default[:zabbix] = {
   :version => '2.4.6',
   :password => 'zabbix',

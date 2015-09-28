@@ -60,3 +60,4 @@ IP Address
 10.10.50.11 zabbix.vb.ns.com  
 10.10.50.12 testing.vb.ns.com  
 10.10.50.13 jenkins.vb.ns.com  
+10.10.50.14 rundeck.vb.ns.com

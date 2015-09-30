@@ -32,6 +32,7 @@ template "/etc/profile.d/tomcat.sh" do
   mode "0644"
   variables({
     :tomcat_home => "/opt/apache-tomcat-#{node[:java][:tomcat][:version]}",
+    :tomcat_opts => node[:java][:tomcat][:opts],
   })
 end
 
@@ -45,5 +46,5 @@ template "/etc/init.d/tomcat" do
 end
 
 service "tomcat" do
-  action [ :enable ]
+  action [ :enable, :start ]
 end

@@ -25,6 +25,7 @@ default[:java] = {
   :tomcat => {
     :package => 'apache-tomcat-8.0.26.tar.gz',
     :version => '8.0.26',
+    :opts    => '',
   },
   :maven => {
     :package => 'apache-maven-3.3.3-bin.tar.gz',

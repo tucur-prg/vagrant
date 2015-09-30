@@ -41,7 +41,7 @@ template "/etc/init.d/tomcat" do
   mode "0755"
   variables({
     :java_home => node[:java][:home],
-    :tomcat_home => "/opt/apache-tomcat-#{node[:java][:tomcat][:version]}"
+    :tomcat_home => "/opt/apache-tomcat-#{node[:java][:tomcat][:version]}",
   })
 end
 

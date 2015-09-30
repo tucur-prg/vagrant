@@ -7,6 +7,7 @@ VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.box = "chef/centos-6.6"
   config.vm.network :private_network, ip: '10.10.10.15'
+  config.vm.hostname = "java"
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "1024"
@@ -17,6 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.cookbooks_path = "../chef-repo/cookbooks"
 
     chef.add_recipe "setup"
+    chef.add_recipe "setup::hosts"
     chef.add_recipe "setup::java"
     chef.add_recipe "setup::tomcat"
     chef.add_recipe "setup::java-gradle"
@@ -27,7 +29,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       :setup => {
         :namespace => "java.vb.ns.com",
         :os_name   => "CentOS 6.6 x86",
-      }
+      },
+      :hosts => [
+        { :ip => '10.10.10.15', :fqdn => 'java', :aliases => ['java.vb.ns.com'] },
+      ],
     }
   end
 end

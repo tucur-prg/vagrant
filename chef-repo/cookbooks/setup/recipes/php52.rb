@@ -6,6 +6,9 @@
   openssl-devel
   bzip2-devel
   gmp-devel
+  autoconf
+  automake
+  re2c
 }.each do |pkg|
   package "#{pkg}" do
   end
@@ -29,4 +32,14 @@ execute "#{php_pkg} install" do
     make
     make install
   EOH
+  notifies :run, "execute[pear install]"
+end
+
+execute "pear install" do
+  action :nothing
+  cwd "/usr/local/src/php-5.2.17/pear"
+  command "/usr/local/bin/php install-pear-nozlib.phar > /tmp/pear.install.log"
+end
+
+directory "/etc/php.d" do
 end

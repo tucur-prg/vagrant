@@ -14,6 +14,14 @@ default[:fluentd] = {
   },
 }
 
+default[:ldap] = {
+  :server_addr => '127.0.0.1',
+  :olc_root_dn => 'cn=Manager,dc=ns,dc=com',
+  :olc_suffix => 'dc=ns,dc=com',
+  :password => '{SSHA}mkEURK9kA3hwmaqVTzAUCCOvvaSCI+eJ', # password = 0000
+  :raw_password => '0000',
+}
+
 default[:java] = {
   :build_user => 'vagrant',
   :home       => '/usr/java/default/',

@@ -1,0 +1,53 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define :server do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.30.17'
+    node.vm.hostname = "server"
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::ldap"
+      chef.add_recipe "setup::ldap-accounts"
+
+      chef.json = {
+        :setup => {
+          :namespace => "ldap.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        }
+      }
+    end
+  end
+
+  config.vm.define :client do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.31.17'
+    node.vm.hostname = "client"
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::ldap-client"
+
+      chef.json = {
+        :setup => {
+          :namespace => "ldap-client.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :ldap => {
+          :server_addr => '10.10.30.17',
+        }
+      }
+    end
+  end
+end

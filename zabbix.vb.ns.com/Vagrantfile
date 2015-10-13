@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     node.omnibus.chef_version = :latest
     node.vm.provision "chef_solo" do |chef|
-     chef.cookbooks_path = "../chef-repo/cookbooks"
+      chef.cookbooks_path = "../chef-repo/cookbooks"
 
       chef.add_recipe "setup"
       chef.add_recipe "setup::zabbix"
@@ -34,24 +34,24 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     node.omnibus.chef_version = :latest
     node.vm.provision "chef_solo" do |chef|
-     chef.cookbooks_path = "../chef-repo/cookbooks"
+      chef.cookbooks_path = "../chef-repo/cookbooks"
 
-     chef.add_recipe "setup"
-     chef.add_recipe "setup::hosts"
-     chef.add_recipe "setup::zabbix-agent"
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::hosts"
+      chef.add_recipe "setup::zabbix-agent"
 
-     chef.json = {
-       :setup => {
-         :namespace => "zabbix-agent.vb.ns.com",
-         :os_name   => "CentOS 6.5 x86",
-       },
-       :hosts => [
-         { :ip => '10.10.51.11', :fqdn => 'agent', :aliases => [] },
-       ],
-       :zabbix_agent => {
-         :server => '10.10.50.11,10.10.51.1',
-       }
-     }
-   end
+      chef.json = {
+        :setup => {
+          :namespace => "zabbix-agent.vb.ns.com",
+          :os_name   => "CentOS 6.5 x86",
+        },
+        :hosts => [
+          { :ip => '10.10.51.11', :fqdn => 'agent', :aliases => [] },
+        ],
+        :zabbix_agent => {
+          :server => '10.10.50.11,10.10.51.1',
+        }
+      }
+    end
   end
 end

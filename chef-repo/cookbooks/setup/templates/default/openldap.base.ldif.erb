@@ -1,0 +1,26 @@
+# ドメイン
+dn: <%= @olc_suffix %>
+objectClass: dcObject
+objectClass: organization
+dc: ns
+o: Example co.,Ltd
+
+# 管理者
+dn: <%= @olc_root_dn %>
+objectClass: organizationalRole
+cn: Manager
+
+# システムユーザー
+dn: ou=People,<%= @olc_suffix %>
+objectClass: organizationalUnit
+ou: People
+
+# システムグループ
+dn: ou=Group,<%= @olc_suffix %>
+objectClass: organizationalUnit
+ou: Group
+
+# アドレス帳
+dn: ou=Address,<%= @olc_suffix %>
+objectClass: organizationalUnit
+ou: Address

@@ -54,6 +54,7 @@ IP Address
 10.10.30.14 capistrano.vb.ns.com  
 10.10.30.15 serverspec.vb.ns.com  
 10.10.30.16 fluentd.vb.ns.com  
+10.10.30.17 ldap.vb.ns.com
 
 10.10.40.11 android.vb.ns.com  
 

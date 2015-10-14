@@ -9,10 +9,7 @@ end
 
 bash "initialize" do
   not_if "test -f /var/lib/ldap/DB_CONFIG"
-  code <<-EOH
-    rm -fr /etc/openldap/slapd.d/*
-    rm -fr /var/lib/ldap/*
-  EOH
+  code "rm -fr /var/lib/ldap/*"
 end
 
 template "/var/lib/ldap/DB_CONFIG" do
@@ -32,7 +29,10 @@ end
 
 bash "initialize slapd" do
   # slaptest が exit 0 で recipe の実行が止まってしまうので || を使い失敗時にコマンドを継続し別の正常コマンドを chef に認識させている
-  code "sudo -u ldap slaptest -f /etc/openldap/slapd.conf -F /etc/openldap/slapd.d || echo ERR_SKIP"
+  code <<-EOH
+    rm -fr /etc/openldap/slapd.d/*
+    sudo -u ldap slaptest -f /etc/openldap/slapd.conf -F /etc/openldap/slapd.d || echo ERR_SKIP
+  EOH
 end
 
 service "slapd" do

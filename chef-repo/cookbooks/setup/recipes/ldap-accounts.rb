@@ -7,6 +7,7 @@ template "/etc/openldap/ldif/base.ldif" do
   variables({
     :olc_root_dn => node[:ldap][:olc_root_dn],
     :olc_suffix => node[:ldap][:olc_suffix],
+    :olc_people_ou => node[:ldap][:olc_people_ou],
   })
   notifies :run, "bash[ldapadd base]"
 end
@@ -32,7 +33,8 @@ end
 template "/etc/openldap/ldif/user.ldif" do
   source "openldap.user.ldif.erb"
   variables({
-    :olc_suffix => node[:ldap][:olc_suffix],
+    :olc_people_ou => node[:ldap][:olc_people_ou],
+    :password => node[:ldap][:password],
   })
   notifies :run, "bash[ldapadd user]"
 end

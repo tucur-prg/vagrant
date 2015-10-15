@@ -38,6 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       chef.add_recipe "setup"
       chef.add_recipe "setup::ldap-client"
+      chef.add_recipe "setup::squid-ldap"
 
       chef.json = {
         :setup => {

@@ -1,5 +1,5 @@
 # 部長：武田 貴彦
-dn: uid=takahiko.takeda,ou=People,<%= @olc_suffix %>
+dn: uid=takahiko.takeda,<%= @olc_people_ou %>
 objectClass: shadowAccount
 objectClass: posixAccount
 objectClass: account
@@ -14,10 +14,10 @@ shadowMin: 0
 shadowMax: 99999
 shadowWarning: 7
 shadowLastChange: 16175
-userPassword: {SSHA}0IBfkSHm6eDVouPuwRlvEBBBofDUNul6
+userPassword: <%= @password %>
 
 # 開発課 課長：横山 真也
-dn: uid=shinya.yokoyama,ou=People,<%= @olc_suffix %>
+dn: uid=shinya.yokoyama,<%= @olc_people_ou %>
 objectClass: shadowAccount
 objectClass: posixAccount
 objectClass: account
@@ -32,10 +32,10 @@ shadowMin: 0
 shadowMax: 99999
 shadowWarning: 7
 shadowLastChange: 16175
-userPassword: {SSHA}WjskiArncjkXcoLNsX49TE5+L6qBfeZL
+userPassword: <%= @password %>
 
 # 運用課 課長：井上 修
-dn: uid=osamu.inoue,ou=People,<%= @olc_suffix %>
+dn: uid=osamu.inoue,<%= @olc_people_ou %>
 objectClass: shadowAccount
 objectClass: posixAccount
 objectClass: account
@@ -50,10 +50,10 @@ shadowMin: 0
 shadowMax: 99999
 shadowWarning: 7
 shadowLastChange: 16175
-userPassword: {SSHA}IMy6+0Zvb5mgsrByu0zrD68K9yHtFVR6
+userPassword: <%= @password %>
 
 # 開発課 社員：石川 直樹
-dn: uid=naoki.ishikawa,ou=People,<%= @olc_suffix %>
+dn: uid=naoki.ishikawa,<%= @olc_people_ou %>
 objectClass: shadowAccount
 objectClass: posixAccount
 objectClass: account
@@ -68,10 +68,10 @@ shadowMin: 0
 shadowMax: 99999
 shadowWarning: 7
 shadowLastChange: 16175
-userPassword: {SSHA}1ixM0yQBZZlFaReiN778DKGSoo5peemc
+userPassword: <%= @password %>
 
 # 運用課 社員：田村 和夫
-dn: uid=kazuo.tamura,ou=People,<%= @olc_suffix %>
+dn: uid=kazuo.tamura,<%= @olc_people_ou %>
 objectClass: shadowAccount
 objectClass: posixAccount
 objectClass: account
@@ -86,4 +86,4 @@ shadowMin: 0
 shadowMax: 99999
 shadowWarning: 7
 shadowLastChange: 16175
-userPassword: {SSHA}vfmOEDQbUqm43yaqFXIOwxMS9y15mfxt
+userPassword: <%= @password %>

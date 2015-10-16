@@ -1,0 +1,82 @@
+
+apply plugin: 'java'
+apply plugin: 'war'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'ch.qos.logback:logback-classic:1.1.3'
+    compile 'org.springframework:spring-webmvc:4.2.1.RELEASE'
+    compile 'javax.servlet:jstl:1.2'
+
+    testCompile 'junit:junit:4.12'
+}
+
+// checkstyle
+apply plugin: 'checkstyle'
+
+checkstyle {
+    ignoreFailures = true
+    configFile = file("${project.rootDir}/config/checkstyle/google_custom.xml")
+    reportsDir = file("${project.buildDir}/reports/checkstyle")
+    toolVersion = '6.7'
+}
+
+checkstyleMain << {
+    ant.xslt(
+        in: reports.xml.destination,
+        style: file("${project.rootDir}/config/checkstyle/noframes-sorted.xsl"),
+        out: new File(reports.xml.destination.parent, 'main.html')
+    )
+}
+
+// findbugs
+apply plugin: 'findbugs'
+
+findbugs {
+    ignoreFailures = true
+    effort = "max"
+    reportLevel = "low"
+    excludeFilter = file("${project.rootDir}/config/findbugs/filter.xml")
+    reportsDir = file("${project.buildDir}/reports/findbugs")
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
+
+// pmd
+apply plugin: 'pmd'
+
+pmd {
+    ignoreFailures = true
+    reportsDir = file("${project.buildDir}/reports/pmd")
+    ruleSets = [
+        "java-basic",
+        "java-strings",
+        "java-braces"
+    ]
+}
+
+// web debug
+apply plugin: 'jetty'
+
+jettyRun {
+    contextPath = "spring4"
+    httpPort = 8081
+}
+
+jettyRunWar {
+    contextPath = "spring4"
+    httpPort = 8081
+}

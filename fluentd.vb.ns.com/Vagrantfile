@@ -16,6 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       chef.add_recipe "setup"
       chef.add_recipe "setup::fluentd"
+      chef.add_recipe "setup::fluentd-settings"
 
       chef.json = {
         :setup => {
@@ -42,6 +43,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       chef.add_recipe "setup"
       chef.add_recipe "setup::fluentd"
+      chef.add_recipe "setup::fluentd-settings"
 
       chef.json = {
         :setup => {

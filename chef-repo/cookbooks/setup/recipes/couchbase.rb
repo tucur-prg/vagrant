@@ -1,16 +1,14 @@
 
-package = "couchbase-server-community-3.0.1-centos6.x86_64"
-
 template '/etc/yum.repos.d/couchbase.repo' do
   source 'yum.repo.couchbase.repo.erb'
 end
 
-remote_file "/usr/local/src/#{package}.rpm" do
-  source "http://packages.couchbase.com/releases/3.0.1/#{package}.rpm"
+remote_file "/usr/local/src/#{node[:couchbase][:package]}.rpm" do
+  source "#{node[:couchbase][:path]}#{node[:couchbase][:package]}.rpm"
 end
 
-rpm_package "#{package}" do
-  source "/usr/local/src/#{package}.rpm"
+rpm_package "#{node[:couchbase][:package]}" do
+  source "/usr/local/src/#{node[:couchbase][:package]}.rpm"
 end
 
 service "couchbase-server" do

@@ -44,6 +44,8 @@ default[:java] = {
 
 default[:couchbase] = {
   :repo => 'http://packages.couchbase.com/rpm/6.2/x86_64',
+  :path => 'http://packages.couchbase.com/releases/3.0.1/',
+  :package => 'couchbase-server-community-3.0.1-centos6.x86_64',
   :admin => {
     :user => 'Administrator',
     :password => '000000',

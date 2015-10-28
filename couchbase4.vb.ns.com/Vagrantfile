@@ -5,11 +5,11 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.define :cluster do |node|
+  config.vm.define :cluster4 do |node|
     node.vm.box = "chef/centos-6.6"
     node.vm.network :private_network, ip: '10.10.20.18'
     node.vm.network :private_network, ip: '10.11.20.18', netmask: '255.0.0.0', virtualbox__intnet: "private_couchbase"
-    node.vm.hostname = "cluster"
+    node.vm.hostname = "cluster4"
 
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "2048"
@@ -24,6 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_recipe "setup"
       chef.add_recipe "setup::hosts"
       chef.add_recipe "setup::couchbase"
+      chef.add_recipe "setup::couchbase4-initialize"
 
       chef.json = {
         :setup => {
@@ -31,13 +32,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           :os_name   => "CentOS 6.6 x86",
         },
         :hosts => [
-          { :ip => '10.11.20.16', :fqdn => 'cluster', :aliases => ['cluster.vb.ns.com'] },
+          { :ip => '10.11.20.18', :fqdn => 'cluster4', :aliases => ['cluster4.vb.ns.com'] },
         ],
 
         :couchbase => {
           :path => 'http://packages.couchbase.com/releases/4.0.0/',
           :package => 'couchbase-server-community-4.0.0-centos6.x86_64',
-          :first => 'cluster.vb.ns.com',
+          :first => 'cluster4.vb.ns.com',
         }
       }
     end

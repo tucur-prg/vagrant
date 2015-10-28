@@ -67,7 +67,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       chef.json = {
         :setup => {
-          :namespace => "couchbase2.vb.ns.com",
+          :namespace => "couchbase001.vb.ns.com",
           :os_name   => "CentOS 6.6 x86",
         },
         :hosts => [

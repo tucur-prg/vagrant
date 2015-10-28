@@ -51,6 +51,8 @@ default[:couchbase] = {
     :password => '000000',
   },
   :ramsize => 512,
+  :index_ramsize => 256,
+  :services => 'data,index,query',
   :first => '127.0.0.1',
   :node => '127.0.0.1',
 }

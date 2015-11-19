@@ -35,7 +35,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :hosts => [
           { :ip => '10.11.20.16', :fqdn => 'cluster', :aliases => ['cluster.vb.ns.com'] },
           { :ip => '10.11.21.16', :fqdn => 'node001', :aliases => ['node001.vb.ns.com'] },
-          { :ip => '10.10.22.16', :fqdn => 'xdcr', :aliases => ['xdcr.vb.ns.com'] },
+          { :ip => '10.11.22.16', :fqdn => 'node002', :aliases => ['node002.vb.ns.com'] },
+          { :ip => '10.10.23.16', :fqdn => 'xdcr', :aliases => ['xdcr.vb.ns.com'] },
         ],
         :couchbase => {
           :first => 'cluster.vb.ns.com',
@@ -73,7 +74,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :hosts => [
           { :ip => '10.11.20.16', :fqdn => 'cluster', :aliases => ['cluster.vb.ns.com'] },
           { :ip => '10.11.21.16', :fqdn => 'node001', :aliases => ['node001.vb.ns.com'] },
-          { :ip => '10.10.22.16', :fqdn => 'xdcr', :aliases => ['xdcr.vb.ns.com'] },
+          { :ip => '10.11.22.16', :fqdn => 'node002', :aliases => ['node002.vb.ns.com'] },
+          { :ip => '10.10.23.16', :fqdn => 'xdcr', :aliases => ['xdcr.vb.ns.com'] },
         ],
         :couchbase => {
           :first => 'cluster.vb.ns.com',
@@ -83,15 +85,55 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  config.vm.define :xdcr do |node|
+  config.vm.define :node002 do |node|
     node.vm.box = "chef/centos-6.6"
     node.vm.network :private_network, ip: '10.10.22.16'
-    node.vm.network :private_network, ip: '10.12.22.16', netmask: '255.0.0.0', virtualbox__intnet: "private_couchbase"
-    node.vm.hostname = "xdcr"
+    node.vm.network :private_network, ip: '10.11.22.16', netmask: '255.0.0.0', virtualbox__intnet: "private_couchbase"
+    node.vm.hostname = "node002"
 
     node.vm.provider "virtualbox" do |vb|
       vb.memory = "1024"
       vb.customize ["modifyvm", :id, "--natnet1", "10.0.5.0/24"]
+      vb.customize ["modifyvm", :id, "--macaddress1", "080127B4124D"]
+    end
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::hosts"
+      chef.add_recipe "setup::couchbase"
+      chef.add_recipe "setup::couchbase-cluster"
+
+      chef.json = {
+        :setup => {
+          :namespace => "couchbase001.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :hosts => [
+          { :ip => '10.11.20.16', :fqdn => 'cluster', :aliases => ['cluster.vb.ns.com'] },
+          { :ip => '10.11.21.16', :fqdn => 'node001', :aliases => ['node001.vb.ns.com'] },
+          { :ip => '10.11.22.16', :fqdn => 'node002', :aliases => ['node002.vb.ns.com'] },
+          { :ip => '10.10.23.16', :fqdn => 'xdcr', :aliases => ['xdcr.vb.ns.com'] },
+        ],
+        :couchbase => {
+          :first => 'cluster.vb.ns.com',
+          :node => 'node002.vb.ns.com',
+        }
+      }
+    end
+  end
+=begin
+  config.vm.define :xdcr do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.23.16'
+    node.vm.network :private_network, ip: '10.12.23.16', netmask: '255.0.0.0', virtualbox__intnet: "private_couchbase"
+    node.vm.hostname = "xdcr"
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "1024"
+      vb.customize ["modifyvm", :id, "--natnet1", "10.0.6.0/24"]
       vb.customize ["modifyvm", :id, "--macaddress1", "080027B4224E"]
     end
 
@@ -112,7 +154,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         :hosts => [
           { :ip => '10.11.20.16', :fqdn => 'cluster', :aliases => ['cluster.vb.ns.com'] },
           { :ip => '10.11.21.16', :fqdn => 'node001', :aliases => ['node001.vb.ns.com'] },
-          { :ip => '10.12.22.16', :fqdn => 'xdcr', :aliases => ['xdcr.vb.ns.com'] },
+          { :ip => '10.11.22.16', :fqdn => 'node002', :aliases => ['node002.vb.ns.com'] },
+          { :ip => '10.12.23.16', :fqdn => 'xdcr', :aliases => ['xdcr.vb.ns.com'] },
         ],
         :couchbase => {
           :first => 'xdcr.vb.ns.com',
@@ -120,4 +163,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
     end
   end
+=end
 end

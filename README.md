@@ -39,6 +39,7 @@ IP Address
 10.10.10.17 erlang.vb.ns.com  
 10.10.10.18 golang.vb.ns.com  
 10.10.10.19 php.vb.ns.com  
+10.10.10.20 php52.vb.ns.com  
 
 10.10.20.11 mongo.vb.ns.com  
 10.10.20.12 mysql.vb.ns.com  

@@ -1,0 +1,5 @@
+<% for node in @nodes -%>
+[munin-client;<%= node.hostname %>]
+  address <%= node.address %>
+  use_node_name no
+<% end -%>

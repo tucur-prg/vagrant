@@ -92,3 +92,11 @@ default[:zabbix] = {
 default[:zabbix_agent] = {
   :server => '127.0.0.1',
 }
+
+default[:munin] = {
+  :nodes => [],
+  :node => {
+    :host_name => 'localhost.localdomain',
+    :allow => '127\.0\.0\.1',
+  },
+}

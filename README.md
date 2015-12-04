@@ -66,3 +66,4 @@ IP Address
 10.10.50.13 jenkins.vb.ns.com  
 10.10.50.14 rundeck.vb.ns.com
 10.10.50.15 log-analysis.vb.ns.com
+10.10.50.16 munin.vb.ns.com

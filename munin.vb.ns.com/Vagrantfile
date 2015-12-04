@@ -1,0 +1,62 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define :server do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.50.16'
+    node.vm.hostname = "server"
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::munin"
+      chef.add_recipe "setup::munin-httpd"
+      chef.add_recipe "setup::apache"
+
+      chef.json = {
+        :setup => {
+          :namespace => "munin.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :munin => {
+          :nodes => [
+            { :hostname => 'node', :address => '10.10.51.16' },
+          ]
+        }
+      }
+    end
+  end
+
+  config.vm.define :node do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.51.16'
+    node.vm.hostname = "node"
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::munin-node"
+
+      chef.json = {
+        :setup => {
+          :namespace => "munin-node.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :munin => {
+          :node => {
+            :host_name => 'node',
+            :allow => '10\.[0-9]+\.[0-9]+\.[0-9]+',
+          }
+        }
+      }
+    end
+  end
+end

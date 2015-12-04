@@ -1,0 +1,26 @@
+
+<VirtualHost *:80>
+  DocumentRoot /var/www/html
+
+  ErrorLog  logs/error_log
+  CustomLog logs/access_log combined
+
+  RewriteEngine On
+
+  RewriteRule /munin/static/(.*) /var/www/html/munin/static/$1 [L]
+
+  RewriteCond %{REQUEST_URI} .html$ [or]
+  RewriteCond %{REQUEST_URI} =/
+  RewriteRule ^/munin/(.*) /var/www/cgi-bin/munin-cgi-html/$1 [L]
+
+  RewriteRule ^/munin-cgi/munin-cgi-graph/(.*) /$1
+
+  RewriteCond %{REQUEST_URI} ^/munin-cgi/(.*)
+  RewriteCond %{REQUEST_URI} .png$
+  RewriteRule ^/(.*) /var/www/cgi-bin/munin-cgi-graph/$1 [L]
+
+  <Directory "/var/www/cgi-bin">
+      Options +ExecCGI
+      SetHandler cgi-script
+  </Directory>
+</VirtualHost>

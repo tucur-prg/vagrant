@@ -57,6 +57,12 @@ default[:couchbase] = {
   :node => '127.0.0.1',
 }
 
+default[:redis] = {
+  :slave => {
+    :masterip => '127.0.0.1',
+  },
+}
+
 default[:rabbitmq] = {
   :cookie  => 'HMVQXUTOIDNGKHFROVLL',
   :path    => 'http://www.rabbitmq.com/releases/rabbitmq-server/v3.5.4/',

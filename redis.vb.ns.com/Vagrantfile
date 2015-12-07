@@ -1,0 +1,65 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.define :master do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.20.19'
+    node.vm.hostname = "master"
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--natnet1", "10.0.3.0/24"]
+      vb.customize ["modifyvm", :id, "--macaddress1", "080027B4224C"]
+    end
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::redis"
+
+      chef.json = {
+        :setup => {
+          :namespace => "redis.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        }
+      }
+    end
+  end
+
+  config.vm.define :slave1 do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.21.19'
+    node.vm.hostname = "slave1"
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.customize ["modifyvm", :id, "--natnet1", "10.0.4.0/24"]
+      vb.customize ["modifyvm", :id, "--macaddress1", "081027B4224C"]
+    end
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::redis"
+      chef.add_recipe "setup::redis-slave"
+
+      chef.json = {
+        :setup => {
+          :namespace => "redis.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :redis => {
+          :slave => {
+            :masterip => '10.10.20.19'
+          }
+        }
+      }
+    end
+  end
+end

@@ -42,6 +42,10 @@ default[:java] = {
   }
 }
 
+default[:aerospile] = {
+  :nodes => [],
+}
+
 default[:couchbase] = {
   :repo => 'http://packages.couchbase.com/rpm/6.2/x86_64',
   :path => 'http://packages.couchbase.com/releases/3.0.1/',

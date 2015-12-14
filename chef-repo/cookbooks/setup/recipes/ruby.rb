@@ -1,4 +1,7 @@
 
+yum_package "readline-devel" do
+end
+
 git "/usr/share/rbenv" do
   repository "https://github.com/sstephenson/rbenv.git"
   reference "master"
@@ -7,7 +10,6 @@ end
 
 directory "/usr/share/rbenv/plugins" do
   mode "0755"
-  action :create_if_missing
 end
 
 git "/usr/share/rbenv/plugins/ruby-build" do

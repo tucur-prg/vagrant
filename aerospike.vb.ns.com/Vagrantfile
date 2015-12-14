@@ -5,26 +5,110 @@
 VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "chef/centos-6.5"
-  config.vm.network :private_network, ip: '10.10.20.13'
+  config.vm.define :cluster do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.20.13'
+    node.vm.network :private_network, ip: '10.11.20.13', netmask: '255.0.0.0', virtualbox__intnet: "private_aerospike"
+    node.vm.hostname = "cluster"
 
-  config.vm.provider "virtualbox" do |vb|
-    vb.memory = "2048"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+    end
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::python"
+      chef.add_recipe "setup::aerospike"
+      chef.add_recipe "setup::aerospike-amc"
+
+      chef.json = {
+        :setup => {
+          :namespace => "aerospike.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :aerospike => {
+          :nodes => [
+            '10.11.20.13',
+            '10.11.21.13',
+            '10.11.22.13',
+          ],
+        }
+      }
+    end
   end
 
-  config.omnibus.chef_version = :latest
-  config.vm.provision "chef_solo" do |chef|
-    chef.cookbooks_path = "../chef-repo/cookbooks"
+  config.vm.define :node001 do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.21.13'
+    node.vm.network :private_network, ip: '10.11.21.13', netmask: '255.0.0.0', virtualbox__intnet: "private_aerospike"
+    node.vm.hostname = "node001"
 
-    chef.add_recipe "setup"
-    chef.add_recipe "setup::python"
-    chef.add_recipe "setup::aerospike"
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.customize ["modifyvm", :id, "--natnet1", "10.0.3.0/24"]
+      vb.customize ["modifyvm", :id, "--macaddress1", "080027B4224C"]
+    end
 
-    chef.json = {
-      :setup => {
-        :namespace => "aerospike.vb.ns.com",
-        :os_name   => "CentOS 6.5 x86",
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::python"
+      chef.add_recipe "setup::aerospike"
+
+      chef.json = {
+        :setup => {
+          :namespace => "aerospike.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :aerospike => {
+          :nodes => [
+            '10.11.20.13',
+            '10.11.21.13',
+            '10.11.22.13',
+          ],
+        }
       }
-    }
+    end
+  end
+
+  config.vm.define :node002 do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.22.13'
+    node.vm.network :private_network, ip: '10.11.22.13', netmask: '255.0.0.0', virtualbox__intnet: "private_aerospike"
+    node.vm.hostname = "node002"
+
+    node.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.customize ["modifyvm", :id, "--natnet1", "10.0.4.0/24"]
+      vb.customize ["modifyvm", :id, "--macaddress1", "080327B4224C"]
+    end
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::python"
+      chef.add_recipe "setup::aerospike"
+
+      chef.json = {
+        :setup => {
+          :namespace => "aerospike.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :aerospike => {
+          :nodes => [
+            '10.11.20.13',
+            '10.11.21.13',
+            '10.11.22.13',
+          ],
+        }
+      }
+    end
   end
 end

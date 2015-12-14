@@ -15,10 +15,13 @@ bash "install aerospike" do
   EOH
 end
 
-%w{
-  aerospike
-}.each do |pkg|
-  service "#{pkg}" do
-    action [ :enable, :start ]
-  end
+template "/etc/aerospike/aerospike.conf" do
+  source "aerospike.aerospike.conf.erb"
+  variables({
+    :nodes => node[:aerospike][:nodes],
+  })
+end
+
+service "aerospike" do
+  action [ :enable, :start ]
 end

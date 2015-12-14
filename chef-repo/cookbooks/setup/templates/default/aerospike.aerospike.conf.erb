@@ -1,0 +1,54 @@
+# Aerospike database configuration file.
+
+service {
+	user root
+	group root
+	paxos-single-replica-limit 1 # Number of nodes where the replica count is automatically reduced to 1.
+	pidfile /var/run/aerospike/asd.pid
+	service-threads 4
+	transaction-queues 4
+	transaction-threads-per-queue 4
+	proto-fd-max 15000
+}
+
+logging {
+	file /var/log/aerospike/aerospike.log {
+		context any info
+	}
+}
+
+network {
+	service {
+		address any
+		port 3000
+	}
+
+	heartbeat {
+		mode mesh
+		address any
+		port 3002
+
+<% for node in @nodes -%>
+		mesh-seed-address-port <%= node %> 3002
+<% end -%>
+
+		interval 250
+		timeout 10
+	}
+
+	fabric {
+		port 3001
+	}
+
+	info {
+		port 3003
+	}
+}
+
+namespace test {
+	replication-factor 2
+	memory-size 1G
+	default-ttl 30d # 30 days, use 0 to never expire/evict.
+
+	storage-engine memory
+}

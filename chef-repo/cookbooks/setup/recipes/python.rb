@@ -1,5 +1,6 @@
 
 %w{
+  python-devel
   python-setuptools
   python-pip
 }.each do |pkg|

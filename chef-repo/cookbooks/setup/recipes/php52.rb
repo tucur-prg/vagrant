@@ -28,11 +28,12 @@ execute "#{php_pkg} install" do
   command <<-EOH
     tar zxvf #{php_pkg}.tar.gz
     cd #{php_pkg}
-    ./configure --cache-file=../config.cache --with-libdir=lib64 --with-config-file-path=/etc --with-config-file-scan-dir=/etc/php.d --disable-debug --with-pic --disable-rpath --without-pear --with-bz2 --with-exec-dir=/usr/bin --with-freetype-dir --with-png-dir --with-xpm-dir --enable-gd-native-ttf --without-gdbm --with-gettext --with-gmp --with-iconv --with-jpeg-dir --with-openssl --with-pcre-regex --with-zlib --with-layout=GNU --enable-exif --enable-ftp --enable-sockets --enable-sysvsem --enable-sysvshm --enable-sysvmsg --with-kerberos --enable-ucd-snmp-hack --enable-shmop --enable-calendar --without-sqlite --with-libxml-dir --enable-xml --with-system-tzdata
+    ./configure --cache-file=../config.cache --with-libdir=lib64 --with-apxs2=/usr/sbin/apxs --with-config-file-path=/etc --with-config-file-scan-dir=/etc/php.d --disable-debug --with-pic --disable-rpath --without-pear --with-bz2 --with-exec-dir=/usr/bin --with-freetype-dir --with-png-dir --with-xpm-dir --enable-gd-native-ttf --without-gdbm --with-gettext --with-gmp --with-iconv --with-jpeg-dir --with-openssl --with-pcre-regex --with-zlib --with-layout=GNU --enable-exif --enable-ftp --enable-sockets --enable-sysvsem --enable-sysvshm --enable-sysvmsg --with-kerberos --enable-ucd-snmp-hack --enable-shmop --enable-calendar --without-sqlite --with-libxml-dir --enable-xml --with-system-tzdata
     make
     make install
   EOH
   notifies :run, "execute[pear install]"
+  notifies :create, "template[/etc/httpd/conf.d/php.conf]"
 end
 
 execute "pear install" do
@@ -42,4 +43,13 @@ execute "pear install" do
 end
 
 directory "/etc/php.d" do
+end
+
+directory "/etc/httpd/conf.d" do
+  recursive true
+end
+
+template "/etc/httpd/conf.d/php.conf" do
+  action :nothing
+  source "apache.php.conf.erb"
 end

@@ -18,6 +18,7 @@ yum_package "php" do
 end
 
 %w{
+  php-pear
   php-devel
   php-mbstring
   php-pdo

@@ -14,7 +14,7 @@
   end
 end
 
-php_pkg = "php-5.2.17"
+php_pkg = node[:php][:package][:version]
 
 remote_file "/usr/local/src/#{php_pkg}.tar.gz" do
   action :create_if_missing
@@ -28,7 +28,7 @@ execute "#{php_pkg} install" do
   command <<-EOH
     tar zxvf #{php_pkg}.tar.gz
     cd #{php_pkg}
-    ./configure --cache-file=../config.cache --with-libdir=lib64 --with-apxs2=/usr/sbin/apxs --with-config-file-path=/etc --with-config-file-scan-dir=/etc/php.d --disable-debug --with-pic --disable-rpath --without-pear --with-bz2 --with-exec-dir=/usr/bin --with-freetype-dir --with-png-dir --with-xpm-dir --enable-gd-native-ttf --without-gdbm --with-gettext --with-gmp --with-iconv --with-jpeg-dir --with-openssl --with-pcre-regex --with-zlib --with-layout=GNU --enable-exif --enable-ftp --enable-sockets --enable-sysvsem --enable-sysvshm --enable-sysvmsg --with-kerberos --enable-ucd-snmp-hack --enable-shmop --enable-calendar --without-sqlite --with-libxml-dir --enable-xml --with-system-tzdata
+    ./configure #{node[:php][:configure][:apxs]} #{node[:php][:configure][:options]}
     make
     make install
   EOH
@@ -38,7 +38,7 @@ end
 
 execute "pear install" do
   action :nothing
-  cwd "/usr/local/src/php-5.2.17/pear"
+  cwd "/usr/local/src/#{php_pkg}/pear"
   command "/usr/local/bin/php install-pear-nozlib.phar > /tmp/pear.install.log"
 end
 
@@ -52,4 +52,11 @@ end
 template "/etc/httpd/conf.d/php.conf" do
   action :nothing
   source "apache.php.conf.erb"
+end
+
+template "/etc/profile.d/path.sh" do
+  source "etc.profile.path.sh.erb"
+  variables({
+    :path => '/usr/local/bin'
+  })
 end

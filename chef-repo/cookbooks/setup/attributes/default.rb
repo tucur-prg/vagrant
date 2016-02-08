@@ -23,6 +23,16 @@ default[:ldap] = {
   :raw_password => '0000',
 }
 
+default[:php] = {
+  :package => {
+    :version => 'php-5.2.17',
+  },
+  :configure => {
+    :apxs    => '',
+    :options => '--cache-file=../config.cache --with-libdir=lib64 --with-config-file-path=/etc --with-config-file-scan-dir=/etc/php.d --disable-debug --with-pic --disable-rpath --without-pear --with-bz2 --with-exec-dir=/usr/bin --with-freetype-dir --with-png-dir --with-xpm-dir --enable-gd-native-ttf --without-gdbm --with-gettext --with-gmp --with-iconv --with-jpeg-dir --with-openssl --with-pcre-regex --with-zlib --with-layout=GNU --enable-exif --enable-ftp --enable-sockets --enable-sysvsem --enable-sysvshm --enable-sysvmsg --with-kerberos --enable-ucd-snmp-hack --enable-shmop --enable-calendar --without-sqlite --with-libxml-dir --enable-xml --with-system-tzdata',
+  },
+}
+
 default[:java] = {
   :build_user => 'vagrant',
   :home       => '/usr/java/default/',
@@ -40,6 +50,16 @@ default[:java] = {
     :package => 'apache-maven-3.3.3-bin.tar.gz',
     :version => '3.3.3',
   }
+}
+
+default[:apache] = {
+  :package => {
+    :version => 'httpd-2.2.15',
+  },
+  :configure => {
+    :prefix  => '--prefix=/usr/local/apache',
+    :options => '--enable-so --enable-ssl --enable-mods-shared=all --with-expat=builtin --with-included-apr',
+  },
 }
 
 default[:aerospile] = {

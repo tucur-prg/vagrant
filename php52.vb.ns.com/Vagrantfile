@@ -18,14 +18,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.add_recipe "setup"
     chef.add_recipe "setup::apache"
-    chef.add_recipe "setup::php52"
+    chef.add_recipe "setup::php-source"
     chef.add_recipe "setup::php-utils"
 
     chef.json = {
       :setup => {
         :namespace => "php52.vb.ns.com",
         :os_name   => "CentOS 6.5 x86",
-      }
+      },
+      :php => {
+        :configure => {
+          :apxs => "--with-apxs2=/usr/sbin/apxs",
+        },
+      },
     }
   end
 end

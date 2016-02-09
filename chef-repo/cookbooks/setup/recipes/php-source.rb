@@ -3,9 +3,13 @@
   gcc
   libxml2
   libxml2-devel
+  libcurl-devel
+  libpng-devel
+  libmcrypt-devel
   openssl-devel
   bzip2-devel
   gmp-devel
+  mysql-devel
   autoconf
   automake
   re2c

@@ -10,6 +10,7 @@
   telnet
   gcc
   gcc-c++
+  gdb
   yum-priorities
   git
   unzip

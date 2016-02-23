@@ -1,0 +1,46 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = "chef/centos-6.5"
+  config.vm.network :private_network, ip: '10.11.10.20'
+
+  config.vm.provider "virtualbox" do |vb|
+    vb.memory = "2048"
+  end
+
+  config.omnibus.chef_version = :latest
+  config.vm.provision "chef_solo" do |chef|
+    chef.cookbooks_path = "../chef-repo/cookbooks"
+
+    chef.add_recipe "setup"
+#    chef.add_recipe "setup::curl-source"
+    chef.add_recipe "setup::apache-source"
+    chef.add_recipe "setup::php-source"
+    chef.add_recipe "setup::php-utils"
+
+    chef.json = {
+      :setup => {
+        :namespace => "php-sp.vb.ns.com",
+        :os_name   => "CentOS 6.5 x86",
+      },
+      :apache => {
+        :configure => {
+          :prefix  => '--prefix=/usr/local/apache2',
+        },
+      },
+      :php => {
+        :package => {
+          :version => 'php-5.2.17',
+        },
+        :configure => {
+          :apxs => "--with-apxs2=/usr/local/apache2/bin/apxs",
+          :options => '--with-mysql=/usr --with-mcrypt --with-curl --with-zlib --with-gd --with-openssl --enable-mbstring --enable-mbregex --enable-ftp --enable-pdo --with-pdo-mysql=/usr --with-libdir=lib64',
+        },
+      },
+    }
+  end
+end

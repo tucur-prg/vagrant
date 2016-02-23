@@ -1,6 +1,15 @@
 
 default[:hosts] = []
 
+default[:curl] = {
+  :package => {
+    :version => 'curl-7.20.1',
+  },
+  :configure => {
+    :options => '',
+  },
+}
+
 default[:rbenv] = {
   :ruby => {
     :versions => ["2.1.2"],

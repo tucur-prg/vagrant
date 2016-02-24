@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.json = {
       :setup => {
-        :namespace => "php-sp.vb.ns.com",
+        :namespace => "php-apache.vb.ns.com",
         :os_name   => "CentOS 6.5 x86",
       },
       :apache => {

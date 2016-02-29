@@ -16,7 +16,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.json = {
       :setup => {
-        :namespace => "tpl.vb.ns.com",
+        :namespace => File.basename(__dir__),
         :os_name   => "CentOS 6.6 x86",
       }
     }

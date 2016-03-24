@@ -35,6 +35,18 @@ bash "initialize slapd" do
   EOH
 end
 
+directory "/var/log/ldap" do
+end
+
+service "rsyslog" do
+  supports :restart => true
+end
+
+template "/etc/rsyslog.d/ldap.conf" do
+  source "openldap.rsyslog.ldap.conf.erb"
+  notifies :restart, 'service[rsyslog]'
+end
+
 service "slapd" do
   action [ :enable, :start ]
 end

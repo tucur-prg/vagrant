@@ -51,4 +51,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
     end
   end
+
+  config.vm.define :jenkins do |node|
+    node.vm.box = "chef/centos-6.6"
+    node.vm.network :private_network, ip: '10.10.32.17'
+    node.vm.hostname = "jenkins"
+
+    node.omnibus.chef_version = :latest
+    node.vm.provision "chef_solo" do |chef|
+      chef.cookbooks_path = "../chef-repo/cookbooks"
+
+      chef.add_recipe "setup"
+      chef.add_recipe "setup::ldap-client"
+      chef.add_recipe "setup::java"
+      chef.add_recipe "setup::jenkins"
+
+      chef.json = {
+        :setup => {
+          :namespace => "ldap-jenkins.vb.ns.com",
+          :os_name   => "CentOS 6.6 x86",
+        },
+        :ldap => {
+          :server_addr => '10.10.30.17',
+        }
+      }
+    end
+  end
 end

@@ -23,7 +23,7 @@ template "/etc/vault.d/server.hcl" do
   source "vault.server.hcl.erb"
 end
 
-template "/etc/profile.d/tomcat.sh" do
+template "/etc/profile.d/vault.sh" do
   source "etc.profile.vault.sh.erb"
 end
 
